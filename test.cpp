@@ -1,4 +1,6 @@
 #include <iostream>
+// #include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 void printName(string name)
@@ -408,11 +410,397 @@ void printstar21(int n)
         cout << endl;
     }
 }
+
+void pair_example()
+{
+    pair<int, int> p = {1, 2};
+    cout << p.first << " " << p.second << endl;
+    pair<int, pair<int, int>> nested_pair = {1, {1, 3}};
+    cout << nested_pair.first << " " << nested_pair.second.first << " " << nested_pair.second.second << endl;
+    pair<int, int> arr[] = {{1, 2}, {4, 5}};
+    cout << arr[0].first << endl;
+}
+
+void vector_example()
+{
+    // Same as array but have dynamic size
+    vector<int> v = {9, 4, 7, 5, 8, 1, 3};
+    v.push_back(2);
+    v.emplace_back(6); // faster
+    cout << v[0] << " " << v[1] << endl;
+    vector<pair<int, int>> vector_pair;
+    vector_pair.push_back({1, 2});
+    vector_pair.emplace_back(4, 5);
+    cout << vector_pair[0].first << endl;
+    vector<int> v1(5, 20); // create vector with 5 elements having value 20 [20,20,20,20,20]
+    cout << v1[0] << endl;
+    vector<int> v2(5);
+    cout << v2[0] << endl;
+    cout << v2.back() << endl; // last element
+    vector<int> v3 = {1, 4, 3, 6};
+    vector<int> v4(v3); // copy above vector
+
+    // iterators
+    vector<int>::iterator it = v.begin(); // iterator pointing to the first element
+    cout << *it << endl;                  // to access the value at that memory location
+    it++;
+    cout << *it << endl;
+
+    for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
+    {
+        cout << *it << " ";
+    }
+    cout << endl;
+    for (auto it = v.begin(); it != v.end(); it++)
+    {
+        cout << *it << " ";
+    }
+    cout << endl;
+    for (auto it : v) // like foreach loop
+    {
+        cout << it << " ";
+    }
+    cout << endl;
+    // vector<int>::iterator it2 = v.end();            // iterator pointing after the last element
+    // vector<int>::reverse_iterator it3 = v.rend();   // iterator pointing before the first element
+    // vector<int>::reverse_iterator it4 = v.rbegin(); // iterator pointing to the last element
+    v.erase(it + 1);                // erase element at the position
+    v.erase(v.begin() + 1, it + 2); // uses for range  first element is starting eleemnt and last is element after end to delete
+    vector<int> test(2, 100);
+    for (auto e : test)
+    {
+        cout << e << " ";
+    }
+    cout << endl;
+    test.insert(test.begin(), 2); // insert at index 0 element 2
+    for (auto e : test)
+    {
+        cout << e << " ";
+    }
+    cout << endl;
+    test.insert(test.begin() + 1, 2, 10); // insert at index 1 two times 10
+    for (auto e : test)
+    {
+        cout << e << " ";
+    }
+    cout << endl;
+    vector<int> copy;
+    copy.insert(copy.begin(), test.begin(), test.end());
+    for (auto i : copy)
+    {
+        cout << i << " ";
+    }
+
+    cout << endl
+         << copy.size() << endl;
+    test.pop_back();
+    for (auto i : test)
+    {
+        cout << i << " ";
+    }
+    test.swap(copy);
+    cout << endl;
+    for (auto i : test)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+    for (auto i : copy)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+    copy.clear();
+    cout << copy.size() << endl;
+    cout << copy.empty() << endl;
+    cout << test.empty() << endl;
+}
+
+void list_example()
+{
+    // Same fucntions as vector but also have fucntion to insert from front but its time complexity  is less as compare to vector in insertion
+    list<int> ls;
+    ls.push_back(2);
+    ls.emplace_back(5);
+    ls.push_front(10);
+    ls.emplace_front(7);
+    for (auto i : ls)
+    {
+        cout << i << " ";
+    }
+    // rest fucntions same as vector
+    //  begin, end, rbegin, rend, clear, empty, size, swap
+}
+
+void dequeue_example()
+{
+    // Same as list
+    deque<int> dq;
+    dq.push_back(5);
+    dq.emplace_back(6);
+    dq.push_front(9);
+    dq.emplace_front(3);
+    dq.pop_back();
+    dq.pop_front();
+    for (auto i : dq)
+    {
+        cout << i << " ";
+    }
+    // rest function are same as vector
+    // begin, end, rbegin, rend, clear, swap, clear, empty
+}
+
+void stack_example()
+{
+    // LIFO
+    stack<int> st;
+    st.push(6);
+    st.push(3);
+    st.push(9);
+    st.emplace(33);
+    cout << st.top() << endl;
+    st.pop();
+    cout << st.top() << endl;
+    cout << st.size() << endl;
+    cout << st.empty() << endl;
+    stack<int> st2;
+    st.swap(st2);
+}
+
+void queue_example()
+{
+    queue<int> qu;
+    qu.push(4);
+    qu.push(2);
+    qu.push(8);
+    qu.emplace(6);
+    cout << qu.front() << endl;
+    cout << qu.back() << endl;
+    qu.back() += 7;
+    cout << qu.back() << endl;
+    qu.pop();
+    cout << qu.front() << endl;
+    // size, empty, swap are similar to stack
+}
+
+void example_priority_example()
+{
+    // push pop happenes in O(log(n)), top happen in O(1)
+    // By default stores the elements in sorting order and largest at top
+    // Max heap
+    priority_queue<int> pq;
+    pq.push(10);
+    pq.push(8);
+    pq.push(16);
+    pq.push(99);
+    pq.emplace(5);
+    cout << pq.top() << endl;
+    pq.pop(); // Removes the top element
+    cout << pq.top() << endl;
+
+    // For reverse order means stores the elements in sorting order and smallest at top
+    // Min heap
+    priority_queue<int, vector<int>, greater<int>> min_pq;
+    min_pq.push(10);
+    min_pq.push(8);
+    min_pq.push(16);
+    min_pq.push(99);
+    min_pq.emplace(5);
+    cout << min_pq.top() << endl;
+}
+
+void example_set()
+{
+    // sorted and unique
+    set<int> s;
+    s.insert(8);
+    s.insert(5);
+    s.insert(9);
+    s.insert(9); // inserts only one time
+    for (auto i : s)
+    {
+        cout << i << endl;
+    }
+    auto it = s.find(9);  // returns an iterator pointing to its address
+    auto it2 = s.find(3); // returns an iterator which point st.end() if element doesnot exist in the set
+    s.erase(5);           // erase 5 from the set
+    int cnt = s.count(5); // if exist thenn 1 else 0
+    auto it3 = s.find(6);
+    s.erase(it3); // we can even pass the iterator to delete the element
+
+    auto it4 = s.find(2);
+    auto it5 = s.find(4);
+    s.erase(it4, it5); /// Will erase the element between 2 and 4 including 2 elemnt but not 4
+}
+
+void example_multiset()
+{
+    // only sorted and not unique
+    multiset<int> s;
+    s.insert(8);
+    s.insert(5);
+    s.insert(9);
+    s.insert(9); // inserts this also
+    for (auto i : s)
+    {
+        cout << i << endl;
+    }
+    auto it = s.find(9);  // returns an iterator pointing to its address
+    auto it2 = s.find(3); // returns an iterator which point st.end() if element doesnot exist in the set
+    s.erase(5);           // erase all 5's from the set so to remove only one ocurance pass the iterator or path of that element
+    int cnt = s.count(5); // if exist thenn return count else 0
+    auto it3 = s.find(6);
+    s.erase(it3); // we can even pass the iterator to delete the element
+
+    auto it4 = s.find(2);
+    auto it5 = s.find(4);
+    s.erase(it4, it5); /// Will erase the element between 2 and 4 including 2 elemnt but not 4
+}
+
+void example_unordered_set()
+{
+    unordered_set<int> us;
+    // It stores only unique elements but in unordered way
+    // Most of the cases has time complexity of O(1) but in worst case it has complexity of O(n)
+    // Doesnot have lower bound or upper bound
+}
+
+void example_map()
+{
+    // map stores unique  key in sorted order.
+    map<int, int> mpp;
+    // map<pair<int, int>, int> mpp;
+    // map<int, pair<int, int>> mpp;
+    mpp[1] = 5;
+    // mpp.emplace({2, 5});
+    mpp.insert({4, 5});
+
+    // mpp[{3, 5}] = 9;
+
+    for (auto i : mpp)
+    {
+        cout << i.first << " " << i.second << endl;
+    }
+}
+
+void example_multimap()
+{
+    // multimap can store duplicate key but in sorted order.
+    multimap<int, int> mpp;
+    // map<pair<int, int>, int> mpp;
+    // map<int, pair<int, int>> mpp;
+    // mpp[1] = 5;
+    // mpp.emplace({2, 5});
+    mpp.insert({4, 5});
+
+    // mpp[{3, 5}] = 9;
+
+    for (auto i : mpp)
+    {
+        cout << i.first << " " << i.second << endl;
+    }
+}
+
+void example_unordered_map()
+{
+    // in ordered map time is log(N) for operations but in unordered map it is O(1) in worst case it is O(n)
+    // unordered_map stores unique key but in unordered manner.
+    unordered_map<int, int> mpp;
+    // map<pair<int, int>, int> mpp;
+    // map<int, pair<int, int>> mpp;
+    // mpp[1] = 5;
+    // mpp.emplace({2, 5});
+    mpp.insert({4, 5});
+
+    // mpp[{3, 5}] = 9;
+
+    for (auto i : mpp)
+    {
+        cout << i.first << " " << i.second << endl;
+    }
+}
+
+bool comp(pair<int, int> a, pair<int, int> b)
+{
+    if (a.second < b.second)
+        return true;
+    if (a.second > b.second)
+        return false;
+
+    if (a.first < b.first)
+    {
+        return false;
+    }
+    return true;
+}
+
+void example_sorting()
+{
+    vector<int> v = {1, 8, 7, 5, 9};
+    sort(v.begin(), v.end()); // takes iterator as params and will only sort elements from first param to element before last parm [a,b)
+    for (auto it : v)
+    {
+        cout << it << " ";
+    }
+    cout << endl;
+    sort(v.begin(), v.end(), greater<int>());
+    for (auto it : v)
+    {
+        cout << it << " ";
+    }
+    cout << endl;
+    pair<int, int> a[] = {{1, 2}, {2, 1}, {4, 1}};
+
+    sort(a, a + 3, comp); // we can pass our own comparison function
+    for (auto it : a)
+    {
+        cout << it.first << " " << it.second << endl;
+    }
+}
+
+void example_extra()
+{
+    int i = 7;
+    int j = 6;
+    int cnt_i = __builtin_popcount(i); // count no. of ones in binary form of that number
+    int cnt_j = __builtin_popcount(j);
+    cout << cnt_i << " " << cnt_j << endl;
+
+    long long num = 7345678976543;
+    int cnt_num = __builtin_popcountll(num); // count no. of ones in binary form of that number for long long
+    cout << cnt_num << endl;
+
+    // Print all the permutations of the strings
+    string s = "123";
+    do
+    {
+        cout << s << endl;
+    } while (next_permutation(s.begin(), s.end()));
+    vector<int> v = {1, 8, 7, 5, 9};
+    int max_num = *max_element(v.begin(), v.end());
+    cout << max_num;
+}
+
 int main()
 {
-    int n;
-    cin >> n;
-    printstar21(n);
+    example_extra();
+    // example_sorting();
+    // example_unordered_map();
+    // example_multimap();
+    // example_map();
+    // example_unordered_set();
+    // example_multiset();
+    // example_set();
+    // example_priority_example();
+    // queue_example();
+    // stack_example();
+    // dequeue_example();
+    // list_example();
+    // vector_example();
+    // pair_example();
+    // int n;
+    // cin >> n;
+    // printstar21(n);
     // printstar20(n);
     // printstar19(n);
     // printstar18(n);
