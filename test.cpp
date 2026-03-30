@@ -781,9 +781,202 @@ void example_extra()
     cout << max_num;
 }
 
+int find_gcd_more_optimal(int a, int b)
+{
+    while (b != 0)
+    {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int find_gcd(int a, int b)
+{
+    if (a == 0)
+        return b;
+    return find_gcd(b, b % a);
+}
+
+void maths_practise()
+{
+    // extration of digits and u can also count no. of digits
+    int num = 112211;
+    int n = num;
+    int count = 0;
+    while (n > 0)
+    {
+        cout << n % 10 << endl;
+        n = n / 10; // Time complexity in this case is log10(N) if divided by other nnumber x then it will be logx(N)
+        count++;
+    }
+    cout << "count of digits: " << count << endl;
+    // to find count u can use log function as it is always divided by 10 so log base 10 +1 will give no. of digits
+    n = num;
+    int count_of_digits = int(log10(n)) + 1;
+    cout << "count of digits by log function: " << count_of_digits << endl;
+
+    // Reverse the n
+    int reverse_number = 0;
+    while (n > 0)
+    {
+        int last_digit = n % 10;
+        n = n / 10;
+        reverse_number = reverse_number * 10 + last_digit;
+    }
+    cout << "reverse_number: " << reverse_number << endl;
+    if (reverse_number == num)
+    {
+        cout << true << endl;
+    }
+    else
+    {
+        cout << false << endl;
+    }
+
+    // Armstrong number whose digits cubes sums will be equal to number itself
+    int new_num = 371;
+    int dup_num = new_num;
+    int sum = 0;
+    while (new_num)
+    {
+        int ld = new_num % 10;
+        new_num /= 10;
+        sum += ld * ld * ld;
+    }
+    if (sum == dup_num)
+        cout << true << endl;
+    else
+        cout << false << endl;
+
+    // Find all the divisor of number 1st method
+    int number = 36;
+    for (int i = 1; i <= number; i++)
+    {
+        if (number % i == 0)
+            cout << i << " ";
+    }
+    cout << endl;
+    // Find all the divisor of number 2nd method and more optimal method
+    for (int i = 1; i * i <= number; i++)
+    {
+        if (number % i == 0)
+        {
+            if (i == number / i)
+                cout << i << " ";
+            else
+                cout << i << " " << number / i << " ";
+        }
+    }
+    cout << endl;
+    // Find prime number 2nd method and more optimal method
+    int prime_or_not = 49;
+    bool is_prime = true;
+    for (int i = 2; i * i <= prime_or_not; i++)
+    {
+        if (prime_or_not % i == 0)
+        {
+            is_prime = false;
+            break;
+        }
+    }
+    if (is_prime)
+    {
+        cout << prime_or_not << ": This no. is prime.";
+    }
+    else
+        cout << "This number is not prime";
+    cout << endl;
+
+    // To find gcd first method
+    int number1 = 20;
+    int number2 = 40;
+    int gcd = 1;
+    for (int i = 1; i <= min(number1, number2); i++)
+    {
+        if (number1 % i == 0 && number2 % i == 0)
+        {
+            gcd = i;
+        }
+    }
+    cout << "gcd: " << gcd << endl;
+
+    // To find gcd second method Euclidean Algorithm
+    // According to this theorem gcd(n1,n2) = gcd (n1-n2,n2) if n1>n2
+    int sub_number = number1 >= number2 ? number1 - number2 : number2 - number1;
+    int min_number = number1 >= number2 ? number2 : number1;
+    gcd = 1;
+    for (int i = 1; i <= min(sub_number, min_number); i++)
+    {
+        if (number1 % i == 0 && number2 % i == 0)
+        {
+            gcd = i;
+        }
+    }
+    cout << "gcd by Euclidean Algorithm: " << gcd << endl;
+}
+
+void recursion_problem_1(int i, int n)
+{
+
+    // Print name 5 times
+    if (i == n)
+        return;
+    cout << "Sourav Saini" << endl;
+    i++;
+    recursion_problem_1(i, n);
+}
+
+void recursion_problem_2(int i, int n)
+{
+    // Print number 1 to n
+    if (i > n)
+        return;
+    cout << i << endl;
+    i++;
+    recursion_problem_2(i, n);
+}
+
+void recursion_problem_3(int i, int n)
+{
+    // Print number n to 1
+    if (n == i)
+        return;
+    cout << n << endl;
+    n--;
+    recursion_problem_3(0, n);
+}
+
+void recursion_problem_4(int i, int n)
+{
+    // Print number 1 to n using backtracking
+    if (i < 1)
+        return;
+    recursion_problem_4(i - 1, n);
+    cout << i << endl;
+}
+
+void recursion_problem_5(int i, int n)
+{
+    // Print number n to 1 by backtracking
+    if (i > n)
+        return;
+    recursion_problem_5(i + 1, n);
+    cout << i << endl;
+}
+
 int main()
 {
-    example_extra();
+    int n;
+    cin >> n;
+    recursion_problem_5(1, n);
+    // recursion_problem_4(n, n);
+    // recursion_problem_3(0, n);
+    // recursion_problem_2(1, n);
+    // recursion_problem_1(0, n);
+    // maths_practise();
+    // example_extra();
     // example_sorting();
     // example_unordered_map();
     // example_multimap();
