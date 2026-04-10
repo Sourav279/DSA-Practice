@@ -1047,16 +1047,26 @@ bool check_palidrome_string2(string str, int i, int n) // using recursion
     return check_palidrome_string2(str, i + 1, n);
 }
 
+int nth_fibonacci_num(int n)
+{
+    if (n == 0)
+        return 0;
+    if (n == 1)
+        return 1;
+    return nth_fibonacci_num(n - 1) + nth_fibonacci_num(n - 2);
+}
+
 int main()
 {
     int n;
     cin >> n;
+    int result = nth_fibonacci_num(n);
+    cout << n << "th fibonacci number: " << result;
+    // string str;
+    // cin >> str;
+    // cout << str << endl;
 
-    string str;
-    cin >> str;
-    cout << str << endl;
-
-    cout << check_palidrome_string2(str, 0, n);
+    // cout << check_palidrome_string2(str, 0, n);
     // check_palidrome_string(str, n);
     // int array_of_num[n];
 
