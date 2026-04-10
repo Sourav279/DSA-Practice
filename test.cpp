@@ -1075,26 +1075,74 @@ int number_of_times_a_character_appear(int n, string str, int arr[])
     }
 }
 
+int number_of_times_a_number_appear_using_map(int n, int arr[], map<int, int> &count)
+{
+    for (int i = 0; i < n; i++)
+    {
+        count[arr[i]] += 1;
+    }
+}
+int number_of_times_a_number_appear_using_map(int n, int arr[], map<int, int> &count)
+{
+    for (int i = 0; i < n; i++)
+    {
+        count[arr[i]] += 1;
+    }
+}
+
 int main()
 {
     int n;
     cin >> n;
-    string str;
-    char start = 'a';
-    cin >> str;
-
-    // Just for lowercase letters
-    // We can use arr of size 256 and map all the chars without even subtraction
-    int arr[26] = {0};
-    number_of_times_a_character_appear(n, str, arr);
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    map<int, int> count;
+    number_of_times_a_number_appear_using_map(n, arr, count);
     int m;
     cin >> m;
-    for (int i = 0; i < m; i++)
+    while (m--)
     {
-        char new_char;
-        cin >> new_char;
-        cout << "Number of times " << new_char << " appears: " << arr[new_char - start] << endl;
+        int num;
+        cin >> num;
+        cout << "Number of times " << num << " appears: " << count[num] << endl;
     }
+
+    // int arr[n];
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> arr[i];
+    // }
+    // map<int, int> count;
+    // number_of_times_a_number_appear_using_map(n, arr, count);
+    // int m;
+    // cin >> m;
+    // while (m--)
+    // {
+    //     int num;
+    //     cin >> num;
+    //     cout << "Number of times " << num << " appears: " << count[num] << endl;
+    // }
+
+    // string str;
+    // char start = 'a';
+    // cin >> str;
+
+    // // Just for lowercase letters
+    // // We can use arr of size 256 and map all the chars without even subtraction
+    // int arr[26] = {0};
+    // number_of_times_a_character_appear(n, str, arr);
+    // int m;
+    // cin >> m;
+    // for (int i = 0; i < m; i++)
+    // {
+    //     char new_char;
+    //     cin >> new_char;
+    //     cout << "Number of times " << new_char << " appears: " << arr[new_char - start] << endl;
+    // }
+
     // int arr[n];
     // for (int i = 0; i < n; i++)
     // {
