@@ -966,11 +966,135 @@ void recursion_problem_5(int i, int n)
     cout << i << endl;
 }
 
+int sum_of_n_natural_numbers_using_recursion(int sum, int n)
+{
+    if (n < 1)
+        return sum;
+    sum = sum + n;
+    sum_of_n_natural_numbers_using_recursion(sum, n - 1);
+}
+
+int sum_of_n_natural_numbers_using_recursion2(int n)
+{
+    if (n == 0)
+        return n;
+
+    return n + sum_of_n_natural_numbers_using_recursion2(n - 1);
+}
+
+int factorial_of_n_using_recursion(int n)
+{
+    if (n == 1)
+        return n;
+
+    return n * factorial_of_n_using_recursion(n - 1);
+}
+
+void reverse_array_using_recursion(vector<int> n, int i, int j)
+{
+    if (j > i)
+    {
+        int temp = n[i];
+        n[i] = n[j];
+        n[j] = temp;
+        reverse_array_using_recursion(n, i + 1, j - 1);
+    }
+    else
+    {
+        for (auto i : n)
+        {
+            cout << i << " ";
+        }
+    }
+}
+
+void reverse_array_using_recursion2(int arr[], int i, int n)
+{
+    if (i >= n / 2)
+        return;
+    swap(arr[i], arr[n - i - 1]);
+    reverse_array_using_recursion2(arr, i + 1, n);
+}
+
+void check_palidrome_string(string str, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (i >= n / 2)
+        {
+            cout << "Its a palindrome";
+            break;
+        }
+        if (str[i] != str[n - i - 1])
+        {
+            cout << "Not a palindrome";
+            break;
+        }
+    }
+}
+
+bool check_palidrome_string2(string str, int i, int n) // using recursion
+{
+
+    if (i >= n / 2)
+    {
+        return true;
+    }
+    if (str[i] != str[n - i - 1])
+    {
+        return false;
+    }
+    return check_palidrome_string2(str, i + 1, n);
+}
+
 int main()
 {
     int n;
     cin >> n;
-    recursion_problem_5(1, n);
+
+    string str;
+    cin >> str;
+    cout << str << endl;
+
+    cout << check_palidrome_string2(str, 0, n);
+    // check_palidrome_string(str, n);
+    // int array_of_num[n];
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> array_of_num[i];
+    // }
+    // for (auto i : array_of_num)
+    // {
+    //     cout << i << " ";
+    // }
+
+    // cout << endl;
+    // reverse_array_using_recursion2(array_of_num, 0, n);
+    // for (auto i : array_of_num)
+    // {
+    //     cout << i << " ";
+    // }
+
+    // vector<int> reverse_array_of_num;
+    // reverse_array_of_num = reverse_array_using_recursion(array_of_num, 0, n - 1);
+    // for (auto i : reverse_array_of_num)
+    // {
+    //     cout << i << " ";
+    // }
+
+    // vector<int> factorial = reverse_array_using_recursion(n);
+
+    // int factorial = factorial_of_n_using_recursion(n);
+    // cout << "factorial: " << factorial;
+
+    // int sum = sum_of_n_natural_numbers_using_recursion2(n);
+    // cout << "sum: " << sum;
+
+    // int sum = sum_of_n_natural_numbers_using_recursion(0, n);
+    // cout << "sum: " << sum;
+
+    // recursion_problem_5(1, n);
     // recursion_problem_4(n, n);
     // recursion_problem_3(0, n);
     // recursion_problem_2(1, n);
