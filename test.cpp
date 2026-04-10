@@ -1082,11 +1082,12 @@ int number_of_times_a_number_appear_using_map(int n, int arr[], map<int, int> &c
         count[arr[i]] += 1;
     }
 }
-int number_of_times_a_number_appear_using_map(int n, int arr[], map<int, int> &count)
+
+int number_of_times_a_char_appear_using_map(int n, string str, map<char, int> &count)
 {
     for (int i = 0; i < n; i++)
     {
-        count[arr[i]] += 1;
+        count[str[i]] += 1;
     }
 }
 
@@ -1094,20 +1095,17 @@ int main()
 {
     int n;
     cin >> n;
-    int arr[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
-    map<int, int> count;
-    number_of_times_a_number_appear_using_map(n, arr, count);
+    string str;
+    cin >> str;
+    map<char, int> count;
+    number_of_times_a_char_appear_using_map(n, str, count);
     int m;
     cin >> m;
     while (m--)
     {
-        int num;
-        cin >> num;
-        cout << "Number of times " << num << " appears: " << count[num] << endl;
+        char charcter;
+        cin >> charcter;
+        cout << "Number of times " << charcter << " appears: " << count[charcter] << endl;
     }
 
     // int arr[n];
