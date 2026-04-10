@@ -1082,6 +1082,9 @@ int main()
     string str;
     char start = 'a';
     cin >> str;
+
+    // Just for lowercase letters
+    // We can use arr of size 256 and map all the chars without even subtraction
     int arr[26] = {0};
     number_of_times_a_character_appear(n, str, arr);
     int m;
