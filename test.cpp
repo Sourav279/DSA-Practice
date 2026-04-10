@@ -1056,12 +1056,52 @@ int nth_fibonacci_num(int n)
     return nth_fibonacci_num(n - 1) + nth_fibonacci_num(n - 2);
 }
 
+int number_of_times_a_number_appear(int n, int arr[], int arr2[])
+{
+    for (int i = 0; i < n; i++)
+    {
+        int index = arr[i];
+        arr2[index] += 1;
+    }
+}
+
+int number_of_times_a_character_appear(int n, int arr[], int arr2[])
+{
+    for (int i = 0; i < n; i++)
+    {
+        int index = arr[i];
+        arr2[index] += 1;
+    }
+}
+
 int main()
 {
     int n;
     cin >> n;
-    int result = nth_fibonacci_num(n);
-    cout << n << "th fibonacci number: " << result;
+
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    // consider max number in the array is 12
+    // max size of array that can be declared inside main will be around  10**6
+    // max size of array that can be declared ouside main(globally) will be around  10**7
+    int count_array[13] = {0};
+    number_of_times_a_number_appear(n, arr, count_array);
+
+    int m;
+    cin >> m;
+
+    for (int i = 0; i < m; i++)
+    {
+        int num;
+        cin >> num;
+        cout << "Number of times " << num << " appears: " << count_array[num] << endl;
+    }
+
+    // int result = nth_fibonacci_num(n);
+    // cout << n << "th fibonacci number: " << result;
     // string str;
     // cin >> str;
     // cout << str << endl;
