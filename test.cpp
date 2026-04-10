@@ -1065,12 +1065,13 @@ int number_of_times_a_number_appear(int n, int arr[], int arr2[])
     }
 }
 
-int number_of_times_a_character_appear(int n, int arr[], int arr2[])
+int number_of_times_a_character_appear(int n, string str, int arr[])
 {
+    char start = 'a';
     for (int i = 0; i < n; i++)
     {
-        int index = arr[i];
-        arr2[index] += 1;
+        int index = str[i] - start;
+        arr[index] += 1;
     }
 }
 
@@ -1078,27 +1079,39 @@ int main()
 {
     int n;
     cin >> n;
-
-    int arr[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
-    // consider max number in the array is 12
-    // max size of array that can be declared inside main will be around  10**6
-    // max size of array that can be declared ouside main(globally) will be around  10**7
-    int count_array[13] = {0};
-    number_of_times_a_number_appear(n, arr, count_array);
-
+    string str;
+    char start = 'a';
+    cin >> str;
+    int arr[26] = {0};
+    number_of_times_a_character_appear(n, str, arr);
     int m;
     cin >> m;
-
     for (int i = 0; i < m; i++)
     {
-        int num;
-        cin >> num;
-        cout << "Number of times " << num << " appears: " << count_array[num] << endl;
+        char new_char;
+        cin >> new_char;
+        cout << "Number of times " << new_char << " appears: " << arr[new_char - start] << endl;
     }
+    // int arr[n];
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> arr[i];
+    // }
+    // // consider max number in the array is 12
+    // // max size of array that can be declared inside main will be around  10**6
+    // // max size of array that can be declared ouside main(globally) will be around  10**7
+    // int count_array[13] = {0};
+    // number_of_times_a_number_appear(n, arr, count_array);
+
+    // int m;
+    // cin >> m;
+
+    // for (int i = 0; i < m; i++)
+    // {
+    //     int num;
+    //     cin >> num;
+    //     cout << "Number of times " << num << " appears: " << count_array[num] << endl;
+    // }
 
     // int result = nth_fibonacci_num(n);
     // cout << n << "th fibonacci number: " << result;
