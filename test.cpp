@@ -1091,14 +1091,28 @@ int number_of_times_a_char_appear_using_map(int n, string str, map<char, int> &c
     }
 }
 
+int number_of_times_a_char_appear_using_unordered_map(int n, string str, unordered_map<char, int> &count)
+{
+    for (int i = 0; i < n; i++)
+    {
+        count[str[i]] += 1;
+    }
+}
+
 int main()
 {
     int n;
     cin >> n;
     string str;
     cin >> str;
-    map<char, int> count;
-    number_of_times_a_char_appear_using_map(n, str, count);
+
+    // If instead of map we use unordered_map timecomplexity will be O(1) for storing and fetching for worst case it will be O(N)
+    unordered_map<char, int> count;
+    number_of_times_a_char_appear_using_unordered_map(n, str, count);
+
+    // Incase of map time complexity will be O(log n) for storing and fetching
+    // map<char, int> count;
+    // number_of_times_a_char_appear_using_map(n, str, count);
     int m;
     cin >> m;
     while (m--)
