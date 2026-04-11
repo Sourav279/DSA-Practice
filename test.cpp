@@ -1145,6 +1145,28 @@ void bubble_sort(vector<int> &arr)
     }
 }
 
+void insertion_sort(vector<int> &arr, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        int j = i;
+        // for (int j = i; j > 0; j--)
+        // {
+        //     if (arr[j] < arr[j - 1])
+        //     {
+        //         swap(arr[j], arr[j - 1]);
+        //     }
+        //     else
+        //         break;
+        // }
+        while (j > 0 && arr[j] < arr[j - 1])
+        {
+            swap(arr[j], arr[j - 1]);
+            j--;
+        }
+    }
+}
+
 int main()
 {
     int n;
@@ -1156,7 +1178,8 @@ int main()
         cin >> arr[i];
     }
 
-    bubble_sort(arr);
+    insertion_sort(arr, n);
+    // bubble_sort(arr);
     for (auto i : arr)
     {
         cout << i << " ";
