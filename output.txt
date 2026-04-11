@@ -1,2 +1,1 @@
-Max occured number: 1
-Min occured number: 2
+6 3 9 1 7 

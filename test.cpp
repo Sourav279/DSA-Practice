@@ -1108,6 +1108,24 @@ int max_min_frequency_number(vector<int> arr, int n, map<int, int> &count)
     }
 }
 
+void selection_sort(vector<int> &arr)
+{
+    int n = arr.size();
+    for (int i = 0; i < n - 1; i++)
+    {
+        int temp;
+        int min_element_index = i;
+        for (int j = i; j < n; j++)
+        {
+            if (arr[j] < arr[min_element_index])
+            {
+                min_element_index = j;
+            }
+        }
+        swap(arr[i], arr[min_element_index]);
+    }
+}
+
 int main()
 {
     int n;
@@ -1118,24 +1136,35 @@ int main()
     {
         cin >> arr[i];
     }
-    map<int, int> count;
-    max_min_frequency_number(arr, n, count);
-    int max_occured_number = count.begin()->first;
-    int min_occured_number = count.begin()->first;
-    for (auto i : count)
+
+    selection_sort(arr);
+    for (auto i : arr)
     {
-        // cout << i.first << " " << i.second << " " << max_occured_number << " " << min_occured_number << endl;
-        if (i.second > count[max_occured_number])
-        {
-            max_occured_number = i.first;
-        }
-        if (i.second < count[min_occured_number])
-        {
-            min_occured_number = i.first;
-        }
+        cout << i << " ";
     }
-    cout << "Max occured number: " << max_occured_number << endl;
-    cout << "Min occured number: " << min_occured_number << endl;
+    // vector<int> arr(n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> arr[i];
+    // }
+    // map<int, int> count;
+    // max_min_frequency_number(arr, n, count);
+    // int max_occured_number = count.begin()->first;
+    // int min_occured_number = count.begin()->first;
+    // for (auto i : count)
+    // {
+    //     // cout << i.first << " " << i.second << " " << max_occured_number << " " << min_occured_number << endl;
+    //     if (i.second > count[max_occured_number])
+    //     {
+    //         max_occured_number = i.first;
+    //     }
+    //     if (i.second < count[min_occured_number])
+    //     {
+    //         min_occured_number = i.first;
+    //     }
+    // }
+    // cout << "Max occured number: " << max_occured_number << endl;
+    // cout << "Min occured number: " << min_occured_number << endl;
     // string str;
     // cin >> str;
 
