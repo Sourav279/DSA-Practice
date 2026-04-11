@@ -1099,28 +1099,61 @@ int number_of_times_a_char_appear_using_unordered_map(int n, string str, unorder
     }
 }
 
+int max_min_frequency_number(vector<int> arr, int n, map<int, int> &count)
+{
+
+    for (int i = 0; i < n; i++)
+    {
+        count[arr[i]]++;
+    }
+}
+
 int main()
 {
     int n;
     cin >> n;
-    string str;
-    cin >> str;
 
-    // If instead of map we use unordered_map timecomplexity will be O(1) for storing and fetching for worst case it will be O(N)
-    unordered_map<char, int> count;
-    number_of_times_a_char_appear_using_unordered_map(n, str, count);
-
-    // Incase of map time complexity will be O(log n) for storing and fetching
-    // map<char, int> count;
-    // number_of_times_a_char_appear_using_map(n, str, count);
-    int m;
-    cin >> m;
-    while (m--)
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++)
     {
-        char charcter;
-        cin >> charcter;
-        cout << "Number of times " << charcter << " appears: " << count[charcter] << endl;
+        cin >> arr[i];
     }
+    map<int, int> count;
+    max_min_frequency_number(arr, n, count);
+    int max_occured_number = count.begin()->first;
+    int min_occured_number = count.begin()->first;
+    for (auto i : count)
+    {
+        // cout << i.first << " " << i.second << " " << max_occured_number << " " << min_occured_number << endl;
+        if (i.second > count[max_occured_number])
+        {
+            max_occured_number = i.first;
+        }
+        if (i.second < count[min_occured_number])
+        {
+            min_occured_number = i.first;
+        }
+    }
+    cout << "Max occured number: " << max_occured_number << endl;
+    cout << "Min occured number: " << min_occured_number << endl;
+    // string str;
+    // cin >> str;
+
+    // // If instead of map we use unordered_map timecomplexity will be O(1) for storing and fetching for worst case it will be O(N)
+    // unordered_map<char, int> count;
+    // number_of_times_a_char_appear_using_unordered_map(n, str, count);
+
+    // // Incase of map time complexity will be O(log n) for storing and fetching
+    // // map<char, int> count;
+    // // number_of_times_a_char_appear_using_map(n, str, count);
+    // int m;
+    // cin >> m;
+    // while (m--)
+    // {
+    //     char charcter;
+    //     cin >> charcter;
+    //     cout << "Number of times " << charcter << " appears: " << count[charcter] << endl;
+    // }
 
     // int arr[n];
     // for (int i = 0; i < n; i++)
