@@ -1206,6 +1206,27 @@ void merge_sort(vector<int> &arr, int low, int high)
     }
 }
 
+void recursive_bubble_sort(vector<int> &arr, int n)
+{
+    bool swap_ = false;
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (arr[i] > arr[i + 1])
+        {
+            swap(arr[i], arr[i + 1]);
+            swap_ = true;
+        }
+    }
+    if (swap_)
+    {
+        recursive_bubble_sort(arr, n - 1);
+    }
+    else
+    {
+        return;
+    }
+}
+
 int main()
 {
     int n;
@@ -1216,8 +1237,8 @@ int main()
     {
         cin >> arr[i];
     }
-
-    merge_sort(arr, 0, n - 1);
+    recursive_bubble_sort(arr, n);
+    // merge_sort(arr, 0, n - 1);
     // insertion_sort(arr, n);
     // bubble_sort(arr);
     for (auto i : arr)
