@@ -1227,6 +1227,19 @@ void recursive_bubble_sort(vector<int> &arr, int n)
     }
 }
 
+void recursive_insertion_sort(vector<int> &arr, int n, int limit)
+{
+    if (limit == n)
+        return;
+    int j = limit;
+    while (j > 0 && arr[j] < arr[j - 1])
+    {
+        swap(arr[j], arr[j - 1]);
+        j--;
+    }
+    recursive_insertion_sort(arr, n, limit + 1);
+}
+
 int main()
 {
     int n;
@@ -1237,7 +1250,8 @@ int main()
     {
         cin >> arr[i];
     }
-    recursive_bubble_sort(arr, n);
+    recursive_insertion_sort(arr, n, 0);
+    // recursive_bubble_sort(arr, n);
     // merge_sort(arr, 0, n - 1);
     // insertion_sort(arr, n);
     // bubble_sort(arr);
