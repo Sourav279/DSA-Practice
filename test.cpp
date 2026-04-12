@@ -1240,6 +1240,34 @@ void recursive_insertion_sort(vector<int> &arr, int n, int limit)
     recursive_insertion_sort(arr, n, limit + 1);
 }
 
+void quick_sort(vector<int> &arr, int low, int high)
+{
+    if (low >= high)
+        return;
+    int pivot = low;
+    int i = low;
+    int j = high;
+    while (j > i)
+    {
+        while (arr[i] <= arr[pivot] && i < high)
+        {
+            i++;
+        }
+        while (arr[j] > arr[pivot] && j > low)
+        {
+            j--;
+        }
+        if (i < j)
+        {
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[j], arr[pivot]);
+    pivot = j;
+    quick_sort(arr, low, pivot - 1);
+    quick_sort(arr, pivot + 1, high);
+}
+
 int main()
 {
     int n;
@@ -1250,7 +1278,9 @@ int main()
     {
         cin >> arr[i];
     }
-    recursive_insertion_sort(arr, n, 0);
+
+    quick_sort(arr, 0, n - 1);
+    // recursive_insertion_sort(arr, n, 0);
     // recursive_bubble_sort(arr, n);
     // merge_sort(arr, 0, n - 1);
     // insertion_sort(arr, n);
