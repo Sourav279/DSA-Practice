@@ -62,6 +62,25 @@ int second_largest_element_in_array(int arr[], int n)
     return second_largest;
 }
 
+int second_smallest_element_in_array(int arr[], int n)
+{
+    int smallest_number = arr[0];
+    int second_smallest_number = INT_MAX;
+    for (int i = 0; i < n; i++)
+    {
+        if (smallest_number > arr[i])
+        {
+            second_smallest_number = smallest_number;
+            smallest_number = arr[i];
+        }
+        if (second_smallest_number > arr[i] && arr[i] > smallest_number)
+        {
+            second_smallest_number = arr[i];
+        }
+    }
+    return second_smallest_number;
+}
+
 int main()
 {
     int n;
@@ -71,8 +90,12 @@ int main()
     {
         cin >> arr[i];
     }
-    int second_largest_element = second_largest_element_in_array(arr, n);
-    cout << "Second Largest Element: " << second_largest_element;
+    int second_smallest_element = second_smallest_element_in_array(arr, n);
+    cout << "Second Smallest Element: " << second_smallest_element;
+
+    // int second_largest_element = second_largest_element_in_array(arr, n);
+    // cout << "Second Largest Element: " << second_largest_element;
+
     // int largest_element = largest_element_in_array(arr, n);
     // cout << "Largest Element: " << largest_element;
 }
