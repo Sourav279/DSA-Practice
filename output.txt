@@ -1,1 +1,1 @@
-Second Smallest Element: 2
+Array is already sorted

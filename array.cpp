@@ -81,6 +81,16 @@ int second_smallest_element_in_array(int arr[], int n)
     return second_smallest_number;
 }
 
+bool check_if_array_is_sorted(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (arr[i] > arr[i + 1])
+            return false;
+    }
+    return true;
+}
+
 int main()
 {
     int n;
@@ -90,8 +100,14 @@ int main()
     {
         cin >> arr[i];
     }
-    int second_smallest_element = second_smallest_element_in_array(arr, n);
-    cout << "Second Smallest Element: " << second_smallest_element;
+
+    bool is_sorted = check_if_array_is_sorted(arr, n);
+    if (is_sorted)
+        cout << "Array is already sorted";
+    else
+        cout << "Array is not sorted";
+    // int second_smallest_element = second_smallest_element_in_array(arr, n);
+    // cout << "Second Smallest Element: " << second_smallest_element;
 
     // int second_largest_element = second_largest_element_in_array(arr, n);
     // cout << "Second Largest Element: " << second_largest_element;
