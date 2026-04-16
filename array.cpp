@@ -91,6 +91,38 @@ bool check_if_array_is_sorted(int arr[], int n)
     return true;
 }
 
+int remove_duplicates_from_sorted_array(int arr[], int n)
+{
+    // Remove duplicates from sorted array and return count  for unique elements and also place them in front in same array
+
+    // Brute force approach. Time complexity = nlogn + n. Space = n
+    // set<int> new_set;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     new_set.insert(arr[i]);
+    // }
+
+    // int index = 0;
+    // for (auto i : new_set)
+    // {
+    //     arr[index] = i;
+    //     index++;
+    // }
+    // return index;
+
+    //  Most optimal solution best. Time complexity = n. Space = n
+    int j = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] != arr[j])
+        {
+            arr[j + 1] = arr[i];
+            j++;
+        }
+    }
+    return j + 1;
+}
+
 int main()
 {
     int n;
@@ -101,11 +133,19 @@ int main()
         cin >> arr[i];
     }
 
-    bool is_sorted = check_if_array_is_sorted(arr, n);
-    if (is_sorted)
-        cout << "Array is already sorted";
-    else
-        cout << "Array is not sorted";
+    int total_unique_element = remove_duplicates_from_sorted_array(arr, n);
+    cout << "total_unique_element: " << total_unique_element << endl;
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+
+    // bool is_sorted = check_if_array_is_sorted(arr, n);
+    // if (is_sorted)
+    //     cout << "Array is already sorted";
+    // else
+    //     cout << "Array is not sorted";
+
     // int second_smallest_element = second_smallest_element_in_array(arr, n);
     // cout << "Second Smallest Element: " << second_smallest_element;
 

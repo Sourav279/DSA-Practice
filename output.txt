@@ -1,1 +1,2 @@
-Array is already sorted
+total_unique_element: 2
+1 2 3 2 3 
