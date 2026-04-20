@@ -126,7 +126,7 @@ int remove_duplicates_from_sorted_array(int arr[], int n)
 void left_rotate_array_by_one_element(int arr[], int n)
 {
     int temp = arr[0];
-    for (int i = 1; i < n - 1; i++)
+    for (int i = 0; i < n - 1; i++)
     {
         arr[i] = arr[i + 1];
     }
