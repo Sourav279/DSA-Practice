@@ -123,6 +123,16 @@ int remove_duplicates_from_sorted_array(int arr[], int n)
     return j + 1;
 }
 
+void left_rotate_array_by_one_element(int arr[], int n)
+{
+    int temp = arr[0];
+    for (int i = 1; i < n - 1; i++)
+    {
+        arr[i] = arr[i + 1];
+    }
+    arr[n - 1] = temp;
+}
+
 int main()
 {
     int n;
@@ -133,12 +143,18 @@ int main()
         cin >> arr[i];
     }
 
-    int total_unique_element = remove_duplicates_from_sorted_array(arr, n);
-    cout << "total_unique_element: " << total_unique_element << endl;
+    left_rotate_array_by_one_element(arr, n);
     for (int i = 0; i < n; i++)
     {
         cout << arr[i] << " ";
     }
+
+    // int total_unique_element = remove_duplicates_from_sorted_array(arr, n);
+    // cout << "total_unique_element: " << total_unique_element << endl;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << arr[i] << " ";
+    // }
 
     // bool is_sorted = check_if_array_is_sorted(arr, n);
     // if (is_sorted)
