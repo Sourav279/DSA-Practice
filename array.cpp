@@ -133,6 +133,31 @@ void left_rotate_array_by_one_element(int arr[], int n)
     arr[n - 1] = temp;
 }
 
+void left_rotate_array_by_d_index(int arr[], int n, int d)
+{
+    d = d % n;
+
+    // Brute force approach
+    // int temp_arr[d];
+    // for (int i = 0; i < d; i++)
+    // {
+    //     temp_arr[i] = arr[i];
+    // }
+    // for (int i = d; i < n; i++)
+    // {
+    //     arr[i - d] = arr[i];
+    // }
+
+    // for (int i = n - d; i < n; i++)
+    // {
+    //     arr[i] = temp_arr[i - (n - d)];
+    // }
+    // Optimal approach
+    reverse(arr, arr + d);
+    reverse(arr + d, arr + n);
+    reverse(arr, arr + n);
+}
+
 int main()
 {
     int n;
@@ -142,8 +167,9 @@ int main()
     {
         cin >> arr[i];
     }
-
-    left_rotate_array_by_one_element(arr, n);
+    int d;
+    cin >> d;
+    left_rotate_array_by_d_index(arr, n, d);
     for (int i = 0; i < n; i++)
     {
         cout << arr[i] << " ";
