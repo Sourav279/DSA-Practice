@@ -189,7 +189,7 @@ void move_zeroes_to_the_end(int arr[], int n)
     //         swap(arr[i], arr[j]);
     // }
     int j = 0;
-    while (arr[j] != 0)
+    while (arr[j] != 0 && j < n)
         j++;
     for (int i = j + 1; i < n; i++)
     {
