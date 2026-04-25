@@ -200,6 +200,17 @@ void move_zeroes_to_the_end(int arr[], int n)
         }
     }
 }
+
+int linear_search_first_occurance(int arr[], int n, int num)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == num)
+            return i;
+    }
+    return -1;
+}
+
 int main()
 {
     int n;
@@ -209,13 +220,16 @@ int main()
     {
         cin >> arr[i];
     }
-    int d;
-    cin >> d;
-    move_zeroes_to_the_end(arr, n);
-    for (int i = 0; i < n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+    int num;
+    cin >> num;
+    int index = linear_search_first_occurance(arr, n, num);
+    cout << "num at index: " << index;
+
+    // move_zeroes_to_the_end(arr, n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << arr[i] << " ";
+    // }
 
     // int total_unique_element = remove_duplicates_from_sorted_array(arr, n);
     // cout << "total_unique_element: " << total_unique_element << endl;
