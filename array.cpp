@@ -158,6 +158,48 @@ void left_rotate_array_by_d_index(int arr[], int n, int d)
     reverse(arr, arr + n);
 }
 
+void move_zeroes_to_the_end(int arr[], int n)
+{
+    // Brute force appproach
+    // int temp[n] = {0};
+    // int j = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (arr[i] != 0)
+    //     {
+    //         temp[j] = arr[i];
+    //         j++;
+    //     }
+    // }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     arr[i] = temp[i];
+    // }
+
+    // More optimal solution
+
+    // int j = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     while (j < n && arr[j] != 0)
+    //     {
+    //         j++;
+    //     }
+    //     if (arr[i] != 0 && i > j)
+    //         swap(arr[i], arr[j]);
+    // }
+    int j = 0;
+    while (arr[j] != 0)
+        j++;
+    for (int i = j + 1; i < n; i++)
+    {
+        if (arr[i] != 0)
+        {
+            swap(arr[i], arr[j]);
+            j++;
+        }
+    }
+}
 int main()
 {
     int n;
@@ -169,7 +211,7 @@ int main()
     }
     int d;
     cin >> d;
-    left_rotate_array_by_d_index(arr, n, d);
+    move_zeroes_to_the_end(arr, n);
     for (int i = 0; i < n; i++)
     {
         cout << arr[i] << " ";
