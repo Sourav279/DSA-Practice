@@ -211,19 +211,89 @@ int linear_search_first_occurance(int arr[], int n, int num)
     return -1;
 }
 
+vector<int> union_of_two_array(vector<int> arr1, vector<int> arr2)
+{
+    // Brute force approach
+    //  set<int> st;
+    //  for (auto i : arr1)
+    //      st.insert(i);
+    //  for (auto i : arr2)
+    //      st.insert(i);
+
+    // vector<int> arr;
+    // for (auto i : st)
+    //     arr.push_back(i);
+    // return arr;
+
+    // Optimal approach O(n1+n2)
+    vector<int> union_array;
+    int n1 = arr1.size();
+    int n2 = arr2.size();
+    int i = 0;
+    int j = 0;
+    while (i < n1 && j < n2)
+    {
+        if (arr1[i] <= arr2[j])
+        {
+            if (union_array.size() == 0 || union_array.back() != arr1[i])
+            {
+                union_array.push_back(arr1[i]);
+            }
+            i++;
+        }
+        else
+        {
+            if (union_array.size() == 0 || union_array.back() != arr2[j])
+            {
+                union_array.push_back(arr2[j]);
+            }
+            j++;
+        }
+    }
+    while (i < n1)
+    {
+        if (arr1[i] != union_array.back())
+        {
+            union_array.push_back(arr1[i]);
+        }
+        i++;
+    }
+    while (j < n2)
+    {
+        if (union_array.back() != arr2[j])
+        {
+            union_array.push_back(arr2[j]);
+        }
+        j++;
+    }
+    return union_array;
+}
+
 int main()
 {
     int n;
     cin >> n;
-    int arr[n];
+    vector<int> array1(n);
+    vector<int> array2(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> arr[i];
+        cin >> array1[i];
     }
-    int num;
-    cin >> num;
-    int index = linear_search_first_occurance(arr, n, num);
-    cout << "num at index: " << index;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> array2[i];
+    }
+
+    vector<int> final_array;
+    final_array = union_of_two_array(array1, array2);
+    for (auto i : final_array)
+    {
+        cout << i << " ";
+    }
+    // int num;
+    // cin >> num;
+    // int index = linear_search_first_occurance(arr, n, num);
+    // cout << "num at index: " << index;
 
     // move_zeroes_to_the_end(arr, n);
     // for (int i = 0; i < n; i++)
