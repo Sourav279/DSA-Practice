@@ -269,6 +269,32 @@ vector<int> union_of_two_array(vector<int> arr1, vector<int> arr2)
     return union_array;
 }
 
+vector<int> intersection_of_two_sorted_array(vector<int> arr1, vector<int> arr2)
+{
+    int n1 = arr1.size();
+    int n2 = arr2.size();
+    int i = 0;
+    int j = 0;
+    vector<int> intersection_array;
+    while (i < n1 && j < n2)
+    {
+        if (arr1[i] < arr2[j])
+        {
+            i++;
+        }
+        if (arr1[i] > arr2[j])
+        {
+            j++;
+        }
+        else
+        {
+            intersection_array.push_back(arr1[i]);
+            i++;
+            j++;
+        }
+    }
+    return intersection_array;
+}
 int main()
 {
     int n;
@@ -285,7 +311,8 @@ int main()
     }
 
     vector<int> final_array;
-    final_array = union_of_two_array(array1, array2);
+    final_array = intersection_of_two_sorted_array(array1, array2);
+    // final_array = union_of_two_array(array1, array2);
     for (auto i : final_array)
     {
         cout << i << " ";
