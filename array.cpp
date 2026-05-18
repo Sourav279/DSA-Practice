@@ -295,28 +295,91 @@ vector<int> intersection_of_two_sorted_array(vector<int> arr1, vector<int> arr2)
     }
     return intersection_array;
 }
+
+int find_missing_number(vector<int> arr, int n)
+{
+    // Brute force method Time complexity = O(n*m) Space compexity =O(1);
+    // for (int i = 1; i <= n; i++)
+    // {
+    //     bool ans = false;
+    //     for (int j = 0; j < n - 1; j++)
+    //     {
+    //         if (i == arr[j])
+    //         {
+    //             ans = true;
+    //             break;
+    //         }
+    //     }
+    //     if (!ans)
+    //         return i;
+    // }
+
+    // Better Solution using the hashing Time complexity = o(2n) Space complexity = O(n)
+    // vector<int> is_present_array(n + 1, 0);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     is_present_array[arr[i]] = 1;
+    // }
+    // for (int i = 1; i <= n; i++)
+    // {
+    //     if (is_present_array[i] == 0)
+    //         return i;
+    // }
+
+    // // Optimal solution - 1 Timecomplexity - O(n) Space complexity = O(1)
+    // int sum_of_n_natural_numbers = n * (n + 1) / 2;
+    // int sum = 0;
+    // for (auto i : arr)
+    // {
+    //     sum += i;
+    // }
+    // return sum_of_n_natural_numbers - sum;
+
+    // Most Optimal solution - 2 XOR method Timecomplexity - O(n) Space complexity = O(1)
+    // Better because in sum if value if 10**5 then sum will be around 10**10 which need long not int but in xor max value will be 10**5 for this.
+    int xor1 = 0;
+    int xor2 = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        xor1 ^= i + 1; // only xor upto n-1
+        xor2 ^= arr[i];
+    }
+    xor1 ^= n; // complete all xor upto n
+    // Xor 2^2 = 0, 2^0 = 2, 2^3 = some num
+    return xor1 ^ xor2;
+}
+
 int main()
 {
     int n;
     cin >> n;
-    vector<int> array1(n);
-    vector<int> array2(n);
-    for (int i = 0; i < n; i++)
+    vector<int> array(n);
+    for (int i = 0; i < n - 1; i++)
     {
-        cin >> array1[i];
+        cin >> array[i];
     }
-    for (int i = 0; i < n; i++)
-    {
-        cin >> array2[i];
-    }
+    int missing_number = find_missing_number(array, n);
+    cout << "Missing number: " << missing_number;
 
-    vector<int> final_array;
-    final_array = intersection_of_two_sorted_array(array1, array2);
-    // final_array = union_of_two_array(array1, array2);
-    for (auto i : final_array)
-    {
-        cout << i << " ";
-    }
+    // vector<int> array1(n);
+    // vector<int> array2(n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> array1[i];
+    // }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> array2[i];
+    // }
+
+    // vector<int> final_array;
+    // final_array = intersection_of_two_sorted_array(array1, array2);
+    // // final_array = union_of_two_array(array1, array2);
+    // for (auto i : final_array)
+    // {
+    //     cout << i << " ";
+    // }
+
     // int num;
     // cin >> num;
     // int index = linear_search_first_occurance(arr, n, num);
