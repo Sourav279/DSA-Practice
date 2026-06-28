@@ -1,1 +1,1 @@
-Length of longest subarray with sum 4 is: 1
+Two number exists for sum 3 is: 0

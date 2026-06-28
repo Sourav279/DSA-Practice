@@ -457,6 +457,60 @@ int find_longest_sub_array_with_sum_n(vector<int> arr, int n, int k)
     return maxLength;
 }
 
+bool two_sum_problem(vector<int> arr, int n, int k)
+{
+    // Brute force method
+    // Time complexity - O(n^2)
+    // Space complexity - O(1)
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < n; j++)
+    //     {
+    //         if (i == j)
+    //             continue;
+    //         if ((arr[i] + arr[j]) == k)
+    //             return true;
+    //     }
+    // }
+    // return false;
+
+    // Better approach
+    // Time complexity - O(n*log n), In unordered map  best case - O(n * 1) worst case - O(n*n)
+    // Space complexity - O(n)
+    // map<int, int> mpp;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (mpp.find(k - arr[i]) != mpp.end())
+    //     {
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         mpp[arr[i]] = i;
+    //     }
+    // }
+    // return false;
+
+    // Without map approach
+    // Time complexity - O(n*log n) + O(n)
+    // Space complexity - O(1)
+    int left = 0, right = n - 1;
+    sort(arr.begin(), arr.end());
+    while (left < right)
+    {
+        int sum = arr[left] + arr[right];
+        if (sum == k)
+        {
+            return true;
+        }
+        else if (sum < k)
+            left++;
+        else
+            right--;
+    }
+    return false;
+}
+
 int main()
 {
     int n;
@@ -469,9 +523,13 @@ int main()
     int k;
     cin >> k;
 
-    int maxLength = find_longest_sub_array_with_sum_n(array, n, k);
+    bool isNumberExist = two_sum_problem(array, n, k);
 
-    cout << "Length of longest subarray with sum " << k << " is: " << maxLength;
+    cout << "Two number exists for sum " << k << " is: " << isNumberExist;
+
+    // int maxLength = find_longest_sub_array_with_sum_n(array, n, k);
+
+    // cout << "Length of longest subarray with sum " << k << " is: " << maxLength;
 
     // int number = find_number_which_appears_only_once(array, n);
     // cout << "Number which is appeared exactly once : " << number;
