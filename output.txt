@@ -1,1 +1,1 @@
-Number which is appeared exactly once : 7
+Length of longest subarray with sum 4 is: 1

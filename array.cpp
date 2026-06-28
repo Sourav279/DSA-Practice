@@ -408,6 +408,55 @@ int find_number_which_appears_only_once(vector<int> arr, int n)
     return number;
 }
 
+int find_longest_sub_array_with_sum_n(vector<int> arr, int n, int k)
+{
+    // This is the most optimal soltuion which works with postive and negative and zero as well
+    // Time complexity = O(n*logn) Spacce complexity = O(n)
+    // If we use unorddered map: best caseTime complexity = O(n*1), worse case time complexity = O(n*log n), Spacce complexity = O(n)
+
+    // int maxLength = 0;
+    // map<long long, int> prefixSum;
+    // long long sum = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     sum += arr[i];
+    //     if (sum == k)
+    //     {
+    //         maxLength = i + 1;
+    //     }
+    //     long long remaining_sum = sum - k;
+    //     if (prefixSum.find(remaining_sum) != prefixSum.end())
+    //     {
+    //         maxLength = max(maxLength, i - prefixSum[remaining_sum]);
+    //     }
+    //     if (prefixSum.find(sum) == prefixSum.end())
+    //     {
+    //         prefixSum[sum] = i;
+    //     }
+    // }
+
+    // This is the most optimal solution with positive and zero numbers.
+    // Time complexity = O(2N) Space complexity = O(1)
+    int maxLength = 0;
+    int j = 0;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+        while (k < sum && j <= i)
+        {
+            sum -= arr[j];
+            j++;
+        }
+        if (sum == k)
+        {
+            maxLength = max(maxLength, i - j + 1);
+        }
+    }
+
+    return maxLength;
+}
+
 int main()
 {
     int n;
@@ -417,9 +466,15 @@ int main()
     {
         cin >> array[i];
     }
+    int k;
+    cin >> k;
 
-    int number = find_number_which_appears_only_once(array, n);
-    cout << "Number which is appeared exactly once : " << number;
+    int maxLength = find_longest_sub_array_with_sum_n(array, n, k);
+
+    cout << "Length of longest subarray with sum " << k << " is: " << maxLength;
+
+    // int number = find_number_which_appears_only_once(array, n);
+    // cout << "Number which is appeared exactly once : " << number;
 
     // int max_count = max_consecutive_ones(array, n);
     // cout << "Maximum consecutive 1's: " << max_count;
