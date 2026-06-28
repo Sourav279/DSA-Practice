@@ -349,6 +349,21 @@ int find_missing_number(vector<int> arr, int n)
     return xor1 ^ xor2;
 }
 
+int max_consecutive_ones(vector<int> arr, int n)
+{
+    int count = 0;
+    int max_count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == 1)
+            count += 1;
+        else
+            count = 0;
+        max_count = max(max_count, count);
+    }
+    return max_count;
+}
+
 int main()
 {
     int n;
@@ -358,8 +373,11 @@ int main()
     {
         cin >> array[i];
     }
-    int missing_number = find_missing_number(array, n);
-    cout << "Missing number: " << missing_number;
+
+    int max_count = max_consecutive_ones(array, n);
+    cout << "Maximum consecutive 1's: " << max_count;
+    // int missing_number = find_missing_number(array, n);
+    // cout << "Missing number: " << missing_number;
 
     // vector<int> array1(n);
     // vector<int> array2(n);
