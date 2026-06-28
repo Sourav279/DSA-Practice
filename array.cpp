@@ -511,6 +511,62 @@ bool two_sum_problem(vector<int> arr, int n, int k)
     return false;
 }
 
+void sorting_array_of_0_1_2(vector<int> &arr, int n)
+{
+    // Brute force approach  merge sort Time complexity = O(n*logn) Space complexity = O(n)
+
+    // Better solution Time complexity = O(2*n) Space complexity = O(1)
+    int count_0 = 0, count_1 = 0, count_2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == 0)
+            count_0++;
+        if (arr[i] == 1)
+            count_1++;
+        if (arr[i] == 2)
+            count_2++;
+    }
+    for (int i = 0; i < count_0; i++)
+    {
+        arr[i] = 0;
+    }
+    for (int i = count_0; i < count_0 + count_1; i++)
+    {
+        arr[i] = 1;
+    }
+    for (int i = count_0 + count_1; i < n; i++)
+    {
+        arr[i] = 2;
+    }
+
+    // Optimal approach - Deutch  national flag algo
+    // Think hypothetical array where  from index 0 to low-1 every elemnt is 0,
+    // from low to mid -1 every element is 1
+    // from mid to high -1 every element is unsorted
+    // from high to n -1 every element is 2
+    // Time complexity = O(n) Space complexity = O(1)
+    int low = 0;
+    int mid = 0;
+    int high = n - 1;
+    while (mid < high)
+    {
+        if (arr[mid] == 0)
+        {
+            swap(arr[low], arr[mid]);
+            low++;
+            mid++;
+        }
+        if (arr[mid] == 1)
+        {
+            mid++;
+        }
+        if (arr[mid] == 2)
+        {
+            swap(arr[mid], arr[high]);
+            high--;
+        }
+    }
+}
 int main()
 {
     int n;
@@ -520,12 +576,19 @@ int main()
     {
         cin >> array[i];
     }
-    int k;
-    cin >> k;
+    sorting_array_of_0_1_2(array, n);
 
-    bool isNumberExist = two_sum_problem(array, n, k);
+    for (auto i : array)
+    {
+        cout << i << " ";
+    }
 
-    cout << "Two number exists for sum " << k << " is: " << isNumberExist;
+    // int k;
+    // cin >> k;
+
+    // bool isNumberExist = two_sum_problem(array, n, k);
+
+    // cout << "Two number exists for sum " << k << " is: " << isNumberExist;
 
     // int maxLength = find_longest_sub_array_with_sum_n(array, n, k);
 
