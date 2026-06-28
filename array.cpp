@@ -364,18 +364,66 @@ int max_consecutive_ones(vector<int> arr, int n)
     return max_count;
 }
 
+int find_number_which_appears_only_once(vector<int> arr, int n)
+{
+    // Brute force approach time complexity = o(n^2)
+    // int number = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int count = 0;
+    //     for (int j = 0; j < n; j++)
+    //     {
+    //         if (arr[i] == arr[j])
+    //             count++;
+    //     }
+    //     if (count == 1)
+    //     {
+    //         number = arr[i];
+    //         break;
+    //     }
+    // }
+
+    // Better solution Time complexity = O(nlogn)+ o(n), Space complexity =  O(n/2 +1)
+    // int number = 0;
+    // map<long, int> mp;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     mp[arr[i]]++;
+    // }
+    // for (auto i : mp)
+    // {
+    //     if (i.second == 1)
+    //     {
+    //         number = i.first;
+    //         break;
+    //     }
+    // }
+
+    // Most optimal solution Time complexity = O(n), Space complexity =  O(1)
+    int number = arr[0];
+    for (int i = 1; i < n; i++)
+    {
+        number = number ^ arr[i];
+    }
+    return number;
+}
+
 int main()
 {
     int n;
     cin >> n;
     vector<int> array(n);
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 0; i < n; i++)
     {
         cin >> array[i];
     }
 
-    int max_count = max_consecutive_ones(array, n);
-    cout << "Maximum consecutive 1's: " << max_count;
+    int number = find_number_which_appears_only_once(array, n);
+    cout << "Number which is appeared exactly once : " << number;
+
+    // int max_count = max_consecutive_ones(array, n);
+    // cout << "Maximum consecutive 1's: " << max_count;
+
     // int missing_number = find_missing_number(array, n);
     // cout << "Missing number: " << missing_number;
 

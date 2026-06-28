@@ -1,1 +1,1 @@
-Maximum consecutive 1's: 3
+Number which is appeared exactly once : 7
