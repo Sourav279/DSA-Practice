@@ -1,1 +1,2 @@
-Majority element is: 2
+2 6
+maximum Sub Array Sum is: 7

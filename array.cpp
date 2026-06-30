@@ -602,6 +602,7 @@ int majority_element(vector<int> arr, int n)
     // }
 
     // Optimal solution (Moore voting algorithm)
+    // Thought is number can't be cancelled if number is more than n/2 times in array.
     // Time complexity = O(N) + O(N)
     int element;
     int count = 0;
@@ -632,6 +633,46 @@ int majority_element(vector<int> arr, int n)
     return -1;
 }
 
+int max_sub_array_sum_kadane_algorithm(vector<int> arr, int n)
+{
+    // Brute force approach
+    // int max_sum = INT_MIN;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int sum = 0;
+    //     for (int j = i; j < n; j++)
+    //     {
+    //         sum = sum + arr[j];
+    //         max_sum = max(max_sum, sum);
+    //     }
+    // }
+    // return max_sum;
+
+    // Optmial solution
+    int max_sum = INT_MIN;
+    int sum = 0;
+    int start = -1;
+    int start_index = -1;
+    int end_index = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (sum == 0)
+            start = i;
+        sum += arr[i];
+        if (sum > max_sum)
+        {
+            max_sum = sum;
+            start_index = start;
+            end_index = i;
+        }
+        if (sum < 0)
+            sum = 0;
+    }
+    // cout << start_index << " " << end_index << endl;
+    // Starting index of the sub array will be start_index and end is end_index. So we will have sub array as well
+    return max_sum;
+}
+
 int main()
 {
     int n;
@@ -641,9 +682,13 @@ int main()
     {
         cin >> array[i];
     }
-    int majority_element_value = majority_element(array, n);
+    int maximum_sub_array_sum = max_sub_array_sum_kadane_algorithm(array, n);
 
-    cout << "Majority element is: " << majority_element_value;
+    cout << "maximum Sub Array Sum is: " << maximum_sub_array_sum;
+
+    // int majority_element_value = majority_element(array, n);
+
+    // cout << "Majority element is: " << majority_element_value;
 
     // sorting_array_of_0_1_2(array, n);
 
