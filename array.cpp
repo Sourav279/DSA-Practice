@@ -567,6 +567,71 @@ void sorting_array_of_0_1_2(vector<int> &arr, int n)
         }
     }
 }
+
+int majority_element(vector<int> arr, int n)
+{
+    // The element which is appeared more than n/2
+
+    // Brute force approch. Time complexity - O(n^2)
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int count = 0;
+    //     for (int j = 0; j < n; j++)
+    //     {
+    //         if (arr[i] == arr[j])
+    //         {
+    //             count++;
+    //         }
+    //     }
+    //     if (count > n / 2)
+    //         return arr[i];
+    // }
+
+    // Better approach
+    // Time complexity - O(NlogN) + O(N)
+    // Space complexity - O(N)
+    // map<int, int> count;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     count[arr[i]]++;
+    // }
+    // for (auto i : count)
+    // {
+    //     if (i.second > n / 2)
+    //         return i.first;
+    // }
+
+    // Optimal solution (Moore voting algorithm)
+    // Time complexity = O(N) + O(N)
+    int element;
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (count == 0)
+        {
+            element = arr[i];
+            count++;
+        }
+        else if (arr[i] == element)
+        {
+            count++;
+        }
+        else
+        {
+            count--;
+        }
+    }
+    int count_of_element = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == element)
+            count_of_element++;
+    }
+    if (count_of_element > n / 2)
+        return element;
+    return -1;
+}
+
 int main()
 {
     int n;
@@ -576,12 +641,16 @@ int main()
     {
         cin >> array[i];
     }
-    sorting_array_of_0_1_2(array, n);
+    int majority_element_value = majority_element(array, n);
 
-    for (auto i : array)
-    {
-        cout << i << " ";
-    }
+    cout << "Majority element is: " << majority_element_value;
+
+    // sorting_array_of_0_1_2(array, n);
+
+    // for (auto i : array)
+    // {
+    //     cout << i << " ";
+    // }
 
     // int k;
     // cin >> k;
