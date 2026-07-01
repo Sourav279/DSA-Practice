@@ -649,6 +649,7 @@ int max_sub_array_sum_kadane_algorithm(vector<int> arr, int n)
     // return max_sum;
 
     // Optmial solution
+    // The thought is when we pass sum to next iteration then there is no use of sum less than 0 so we re initialize sum with 0 only carry postive sums for next iteration
     int max_sum = INT_MIN;
     int sum = 0;
     int start = -1;
@@ -673,6 +674,95 @@ int max_sub_array_sum_kadane_algorithm(vector<int> arr, int n)
     return max_sum;
 }
 
+vector<int> rearrange_the_positive_and_negative(vector<int> arr, int n)
+{
+    // Brute force method;
+    // Given it will have equal +ve and -ve numbers.
+    //  Time complexity - O(n) + O(n/2)
+    //  Space complexity - O(n)
+    // vector<int> positive;
+    // vector<int> negative;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (arr[i] >= 0)
+    //         positive.push_back(arr[i]);
+    //     else
+    //         negative.push_back(arr[i]);
+    // }
+    // for (int i = 0; i < n / 2; i++)
+    // {
+    //     arr[2 * i] = positive[i];
+    //     arr[2 * i + 1] = negative[i];
+    // }
+    // return arr;
+
+    // Better solution
+    // It will only work if the there are equal number of positive and negative
+    //   Time complexity - O(n)
+    //   Space complexity - O(n)
+    // vector<int> ans(n, 0);
+    // int positive = 0;
+    // int negative = 1;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (arr[i] >= 0)
+    //     {
+    //         ans[positive] = arr[i];
+    //         positive += 2;
+    //     }
+    //     else
+    //     {
+    //         ans[negative] = arr[i];
+    //         negative += 2;
+    //     }
+    // }
+    // return ans;
+
+    // Brute force method;
+    // Given it will work for both with and without equal +ve and -ve numbers.
+    //  Time complexity - O(n) + O(n/2)
+    //  Space complexity - O(n)
+    vector<int> positive;
+    vector<int> negative;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] >= 0)
+            positive.push_back(arr[i]);
+        else
+            negative.push_back(arr[i]);
+    }
+
+    if (positive.size() > negative.size())
+    {
+        for (int i = 0; i < negative.size(); i++)
+        {
+            arr[2 * i] = positive[i];
+            arr[2 * i + 1] = negative[i];
+        }
+        int index = negative.size() * 2;
+        for (int i = negative.size(); i < positive.size(); i++)
+        {
+            arr[index] = positive[i];
+            index++;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < positive.size(); i++)
+        {
+            arr[2 * i] = positive[i];
+            arr[2 * i + 1] = negative[i];
+        }
+        int index = positive.size() * 2;
+        for (int i = positive.size(); i < negative.size(); i++)
+        {
+            arr[index] = negative[i];
+            index++;
+        }
+    }
+    return arr;
+}
+
 int main()
 {
     int n;
@@ -682,9 +772,16 @@ int main()
     {
         cin >> array[i];
     }
-    int maximum_sub_array_sum = max_sub_array_sum_kadane_algorithm(array, n);
 
-    cout << "maximum Sub Array Sum is: " << maximum_sub_array_sum;
+    vector<int> ans = rearrange_the_positive_and_negative(array, n);
+    for (auto i : ans)
+    {
+        cout << i << " ";
+    }
+
+    // int maximum_sub_array_sum = max_sub_array_sum_kadane_algorithm(array, n);
+
+    // cout << "maximum Sub Array Sum is: " << maximum_sub_array_sum;
 
     // int majority_element_value = majority_element(array, n);
 
