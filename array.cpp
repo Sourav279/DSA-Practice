@@ -720,7 +720,7 @@ vector<int> rearrange_the_positive_and_negative(vector<int> arr, int n)
 
     // Brute force method;
     // Given it will work for both with and without equal +ve and -ve numbers.
-    //  Time complexity - O(n) + O(n/2)
+    //  Time complexity - O(n) + O(n)
     //  Space complexity - O(n)
     vector<int> positive;
     vector<int> negative;
@@ -763,6 +763,45 @@ vector<int> rearrange_the_positive_and_negative(vector<int> arr, int n)
     return arr;
 }
 
+void next_greater_permutation_(vector<int> &arr, int n)
+{
+    // Brtue force solution
+    //  Find all the permutaions of the array then check which is just next greater then the given array
+
+    // Better solution, Use in built library STL of c++
+    // next_permutation(arr.begin(), arr.end());
+
+    // Most optimal solution
+    // Time complexity = O(3N) Space complexity = O(1)
+    // First find breakpoint for the dip from last element
+    int index = -1;
+    for (int i = n - 2; i >= 0; i--)
+    {
+        if (arr[i] < arr[i + 1])
+        {
+            index = i;
+            break;
+        }
+    }
+    // Edge case if given array has greatest value then just reverse the array
+    if (index == -1)
+    {
+        reverse(arr.begin(), arr.end());
+        return;
+    }
+    // Swap the just greater element than arr[index]
+    for (int i = n - 1; i > index; i--)
+    {
+        if (arr[index] < arr[i])
+        {
+            swap(arr[i], arr[index]);
+            break;
+        }
+    }
+    // Reverse the string after than element whose index we found so that it will in the smallest form for next permutaion finding
+    reverse(arr.begin() + index + 1, arr.end());
+}
+
 int main()
 {
     int n;
@@ -773,11 +812,16 @@ int main()
         cin >> array[i];
     }
 
-    vector<int> ans = rearrange_the_positive_and_negative(array, n);
-    for (auto i : ans)
+    next_greater_permutation_(array, n);
+    for (auto i : array)
     {
         cout << i << " ";
     }
+    // vector<int> ans = rearrange_the_positive_and_negative(array, n);
+    // for (auto i : ans)
+    // {
+    //     cout << i << " ";
+    // }
 
     // int maximum_sub_array_sum = max_sub_array_sum_kadane_algorithm(array, n);
 
