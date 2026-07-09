@@ -802,6 +802,23 @@ void next_greater_permutation_(vector<int> &arr, int n)
     reverse(arr.begin() + index + 1, arr.end());
 }
 
+vector<int> leaders_in_an_array(vector<int> &arr, int n)
+{
+    // Leader is an element in array which is greater than all the elements on its right.
+    // There can be mulitple leaders . eg 16 8 3 4  so leaders are 16,8,4
+    // time commplexity = O(N) Space commpleity - O(N)
+    int maxElement = INT_MIN;
+    vector<int> ans;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (arr[i] > maxElement)
+        {
+            ans.push_back(arr[i]);
+            maxElement = arr[i];
+        }
+    }
+    return ans;
+}
 int main()
 {
     int n;
@@ -812,11 +829,16 @@ int main()
         cin >> array[i];
     }
 
-    next_greater_permutation_(array, n);
-    for (auto i : array)
+    vector<int> ans = leaders_in_an_array(array, n);
+    for (auto i : ans)
     {
         cout << i << " ";
     }
+    // next_greater_permutation_(array, n);
+    // for (auto i : array)
+    // {
+    //     cout << i << " ";
+    // }
     // vector<int> ans = rearrange_the_positive_and_negative(array, n);
     // for (auto i : ans)
     // {
