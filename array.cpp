@@ -819,6 +819,94 @@ vector<int> leaders_in_an_array(vector<int> &arr, int n)
     }
     return ans;
 }
+
+bool ls(vector<int> &arr, int num)
+{
+    int n = arr.size();
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == num)
+            return true;
+    }
+    return false;
+}
+
+int longest_consecutive_sequence(vector<int> &arr, int n)
+{
+    // To find the length of longest consecutive sequence present in an array
+    // Brute force solution
+    //  Time - O(N^2)
+    //  Space - O(1)
+    // int maxLength = 1;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int num = arr[i];
+    //     int count = 1;
+    //     while (ls(arr, num + 1) == true)
+    //     {
+    //         count++;
+    //         num++;
+    //     }
+    //     maxLength = max(maxLength, count);
+    // }
+    // return maxLength;
+
+    // Better solution
+    //  Time - O(N*LogN) + O(N)
+    //  Space - O(1)
+    // int maxLength = 1;
+    // int count = 0;
+    // int smallestELement = INT_MIN;
+    // sort(arr.begin(), arr.end()); // N*logN
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (smallestELement == (arr[i] - 1))
+    //     {
+    //         count++;
+    //         smallestELement = arr[i];
+    //     }
+    //     else if (smallestELement != arr[i])
+    //     {
+    //         smallestELement = arr[i];
+    //         count = 1;
+    //     }
+    //     maxLength = max(maxLength, count);
+    // }
+
+    // return maxLength;
+
+    // Optimal solution
+    // Approach is to start counting from the first element instead of counting for every element. Updated bruteforce
+    //  Time - O(2N) + O(N)
+    //  Space - O(1)
+    int maxLength = 1;
+    unordered_set<int> st;
+
+    // Time  = worst case - O(N) best case O(1), Space = O(N)
+    for (int i = 0; i < n; i++)
+    {
+        st.insert(arr[i]);
+    }
+
+    // Time O(N+N)
+    for (auto i : st)
+    {
+        if (st.find(i - 1) == st.end())
+        {
+            int count = 1;
+            int x = i;
+            while (st.find(x + 1) != st.end())
+            {
+                count = count + 1;
+                x = x + 1;
+            }
+            maxLength = max(maxLength, count);
+        }
+    }
+    return maxLength;
+}
+
 int main()
 {
     int n;
@@ -829,11 +917,14 @@ int main()
         cin >> array[i];
     }
 
-    vector<int> ans = leaders_in_an_array(array, n);
-    for (auto i : ans)
-    {
-        cout << i << " ";
-    }
+    int ans = longest_consecutive_sequence(array, n);
+    cout << "Length of longest consecutive sequence is: " << ans;
+
+    // vector<int> ans = leaders_in_an_array(array, n);
+    // for (auto i : ans)
+    // {
+    //     cout << i << " ";
+    // }
     // next_greater_permutation_(array, n);
     // for (auto i : array)
     // {
