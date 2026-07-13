@@ -907,18 +907,141 @@ int longest_consecutive_sequence(vector<int> &arr, int n)
     return maxLength;
 }
 
-int main()
+void columnZero(vector<vector<int>> &arr, int i)
 {
-    int n;
-    cin >> n;
-    vector<int> array(n);
+    int n = arr.size();
+    for (int j = 0; j < n; j++)
+    {
+        if (arr[i][j] != 0)
+            arr[i][j] = -1;
+    }
+}
+
+void rowZero(vector<vector<int>> &arr, int j)
+{
+    int n = arr[0].size();
     for (int i = 0; i < n; i++)
     {
-        cin >> array[i];
+        if (arr[i][j] != 0)
+            arr[i][j] = -1;
+    }
+}
+
+void set_matrix_zeroes(vector<vector<int>> &arr, int n, int m)
+{
+    // If there is any zero then we will replace that entire row and column in zero
+
+    // Brute force.
+    //  Time = O((n+m)(n*m) + n*m)
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < m; j++)
+    //     {
+    //         if (arr[i][j] == 0)
+    //         {
+    //             rowZero(arr, j);
+    //             columnZero(arr, i);
+    //         }
+    //     }
+    // }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < m; j++)
+    //     {
+    //         if (arr[i][j] == -1)
+    //         {
+    //             arr[i][j] = 0;
+    //         }
+    //     }
+    // }
+
+    // Optimal approach
+    // Time complexity = O(n*n)
+    // Space complexity = O(1)
+    int col_0 = 1;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (arr[i][j] == 0)
+            {
+                arr[i][0] = 0;
+                if (j != 0)
+                {
+                    arr[0][j] = 0;
+                }
+                else
+                {
+                    col_0 = 0;
+                }
+            }
+        }
+    }
+    for (int i = n - 1; i > 0; i--)
+    {
+        for (int j = m - 1; j > 0; j--)
+        {
+            if (arr[i][j] != 0)
+            {
+
+                if (arr[0][j] == 0 || arr[i][0] == 0)
+                {
+                    arr[i][j] = 0;
+                }
+            }
+        }
+    }
+    if (arr[0][0] == 0)
+    {
+
+        for (int j = 0; j < m; j++)
+        {
+            arr[0][j] = 0;
+        }
+    }
+    if (col_0 == 0)
+    {
+
+        for (int i = 0; i < n; i++)
+        {
+            arr[i][0] = 0;
+        }
+    }
+}
+int main()
+{
+    int rows, cols;
+    cin >> rows >> cols;
+
+    vector<vector<int>> matrix(rows, vector<int>(cols));
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cin >> matrix[i][j];
+        }
+    }
+    set_matrix_zeroes(matrix, rows, cols);
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
     }
 
-    int ans = longest_consecutive_sequence(array, n);
-    cout << "Length of longest consecutive sequence is: " << ans;
+    // int n;
+    // cin >> n;
+    // vector<int> array(n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> array[i];
+    // }
+
+    // int ans = longest_consecutive_sequence(array, n);
+    // cout << "Length of longest consecutive sequence is: " << ans;
 
     // vector<int> ans = leaders_in_an_array(array, n);
     // for (auto i : ans)
