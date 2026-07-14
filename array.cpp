@@ -1051,6 +1051,49 @@ void rotate_matrix_by_90_degree_clockwise(vector<vector<int>> &arr, int n, int m
     }
 }
 
+vector<int> spiral_traversal_of_a_matrix(vector<vector<int>> arr, int n, int m)
+{
+    // Optimal solution
+    // Time complexity = O(n*m)
+    // Space complexity = O(n*m)
+    int top = 0, bottom = n - 1, left = 0, right = m - 1;
+    vector<int> ans;
+    while (left <= right && top <= bottom)
+    {
+
+        for (int i = left; i <= right; i++)
+        {
+            ans.push_back(arr[top][i]);
+        }
+        top++;
+
+        for (int i = top; i <= bottom; i++)
+        {
+            ans.push_back(arr[i][right]);
+        }
+        right--;
+        if (top <= bottom)
+        {
+
+            for (int i = right; i >= left; i--)
+            {
+                ans.push_back(arr[bottom][i]);
+            }
+        }
+        bottom--;
+        if (left <= right)
+        {
+
+            for (int i = bottom; i >= top; i--)
+            {
+                ans.push_back(arr[i][left]);
+            }
+        }
+        left++;
+    }
+    return ans;
+}
+
 int main()
 {
     int rows, cols;
@@ -1065,15 +1108,21 @@ int main()
             cin >> matrix[i][j];
         }
     }
-    rotate_matrix_by_90_degree_clockwise(matrix, rows, cols);
-    for (int i = 0; i < rows; i++)
+    vector<int> ans = spiral_traversal_of_a_matrix(matrix, rows, cols);
+
+    for (int i = 0; i < ans.size(); i++)
     {
-        for (int j = 0; j < cols; j++)
-        {
-            cout << matrix[i][j] << " ";
-        }
-        cout << endl;
+        cout << ans[i] << " ";
     }
+    // rotate_matrix_by_90_degree_clockwise(matrix, rows, cols);
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     for (int j = 0; j < cols; j++)
+    //     {
+    //         cout << matrix[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 
     // set_matrix_zeroes(matrix, rows, cols);
     // for (int i = 0; i < rows; i++)
