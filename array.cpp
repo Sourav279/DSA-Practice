@@ -1008,6 +1008,49 @@ void set_matrix_zeroes(vector<vector<int>> &arr, int n, int m)
         }
     }
 }
+
+void rotate_matrix_by_90_degree_clockwise(vector<vector<int>> &arr, int n, int m)
+{
+    // Brute force
+    // Time complexity = O(n*m)
+    // Space complexity = O(n*m)
+    // vector<vector<int>> matrix(m, vector<int>(n));
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < m; j++)
+    //     {
+    //         matrix[j][n - i - 1] = arr[i][j];
+    //     }
+    // }
+    // for (int i = 0; i < m; i++)
+    // {
+    //     for (int j = 0; j < n; j++)
+    //     {
+    //         cout << matrix[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    // Optimal approach for square matrix
+    //  First transpose the matrix then reverse the each row
+    // Swap only elements above the diagnol so that other will autommatically swapped.
+    // Time complexity = O(n/2*m/2) + O(n*m/2) -- reverse
+    // Space complexity = O(1)
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < m; j++)
+        {
+            int temp = arr[j][i];
+            arr[j][i] = arr[i][j];
+            arr[i][j] = temp;
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        reverse(arr[i].begin(), arr[i].end());
+    }
+}
+
 int main()
 {
     int rows, cols;
@@ -1022,7 +1065,7 @@ int main()
             cin >> matrix[i][j];
         }
     }
-    set_matrix_zeroes(matrix, rows, cols);
+    rotate_matrix_by_90_degree_clockwise(matrix, rows, cols);
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -1031,6 +1074,16 @@ int main()
         }
         cout << endl;
     }
+
+    // set_matrix_zeroes(matrix, rows, cols);
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     for (int j = 0; j < cols; j++)
+    //     {
+    //         cout << matrix[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 
     // int n;
     // cin >> n;
