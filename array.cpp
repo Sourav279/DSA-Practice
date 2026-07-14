@@ -1094,26 +1094,99 @@ vector<int> spiral_traversal_of_a_matrix(vector<vector<int>> arr, int n, int m)
     return ans;
 }
 
+int number_of_sub_array_with_sum_k(vector<int> arr, int n, int k)
+{
+    // // Brute  force
+    // // Time - O(n^3)
+    // // Space - O(1)
+    // int count = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = i; j < n; j++)
+    //     {
+    //         int sum = 0;
+    //         for (int m = i; m <= j; m++)
+    //         {
+    //             sum += arr[m];
+    //         }
+    //         if (sum == k)
+    //         {
+    //             count++;
+    //         }
+    //     }
+    // }
+    // return count;
+
+    // Better  solution
+    // Time - O(n^2)
+    // Space - O(1)
+    // int count = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int sum = 0;
+    //     for (int j = i; j < n; j++)
+    //     {
+    //         sum += arr[j];
+
+    //         if (sum == k)
+    //         {
+    //             count++;
+    //         }
+    //     }
+    // }
+    // return count;
+
+    // Optimal solution
+    // Time - O(n) -- average case, O(n*n) - Unordered map collision
+    // Space - O(n)
+    // Using prefix sum that is sum = (sum - k) + k
+    // If we need k then if there is previously sum -k present then add there count.
+    unordered_map<int, int> mp;
+    int count = 0, sum = 0;
+    mp[0] = 1;
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+        count += mp[sum - k];
+        mp[sum] += 1;
+    }
+    return count;
+}
+
 int main()
 {
-    int rows, cols;
-    cin >> rows >> cols;
 
-    vector<vector<int>> matrix(rows, vector<int>(cols));
-
-    for (int i = 0; i < rows; i++)
+    int n;
+    cin >> n;
+    int k;
+    cin >> k;
+    vector<int> array(n);
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < cols; j++)
-        {
-            cin >> matrix[i][j];
-        }
+        cin >> array[i];
     }
-    vector<int> ans = spiral_traversal_of_a_matrix(matrix, rows, cols);
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    int ans = number_of_sub_array_with_sum_k(array, n, k);
+    cout << "Number of sub arrays with sum " << k << ": " << ans;
+
+    // int rows, cols;
+    // cin >> rows >> cols;
+
+    // vector<vector<int>> matrix(rows, vector<int>(cols));
+
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     for (int j = 0; j < cols; j++)
+    //     {
+    //         cin >> matrix[i][j];
+    //     }
+    // }
+    // vector<int> ans = spiral_traversal_of_a_matrix(matrix, rows, cols);
+
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     // rotate_matrix_by_90_degree_clockwise(matrix, rows, cols);
     // for (int i = 0; i < rows; i++)
     // {
