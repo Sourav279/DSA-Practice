@@ -1167,7 +1167,9 @@ int binary_search_in_array(vector<int> arr, int n, int k)
     int high = n - 1;
     while (low <= high)
     {
-        int mid = (low + high) / 2;
+        // int mid = (low + high) / 2;
+        // Instead of using above statemnet use below statement otherwise if low oand high have value of INT_MAX then it will not overflow in below case but  overflow in above case
+        int mid = low + (high - low) / 2;
         if (arr[mid] == k)
         {
             return mid;
@@ -1186,9 +1188,18 @@ int binary_search_in_array(vector<int> arr, int n, int k)
 
 int binary_search_in_array_with_recursion(vector<int> &arr, int n, int k, int low, int high)
 {
+    // to find the index of element k
+    // Data should be sorted for binary search
+    // Binary search  is divding the array from mid and then check  if the element is on left side or right side of mid
+    // This will decrease the iterations and helps in better time complexity.
+
+    // Time complexity = O(n);
+    // Space complexity = O(1);
     if (low > high)
         return -1;
-    int mid = (low + high) / 2;
+    // int mid = (low + high) / 2;
+    // Instead of using above statemnet use below statement otherwise if low oand high have value of INT_MAX then it will not overflow in below case but  overflow in above case
+    int mid = low + (high - low) / 2;
     if (arr[mid] == k)
         return mid;
     if (arr[mid] > k)
@@ -1199,7 +1210,7 @@ int binary_search_in_array_with_recursion(vector<int> &arr, int n, int k, int lo
     {
         low = low + 1;
     }
-    return binary_search_in_array(arr, n, k, low, high);
+    return binary_search_in_array_with_recursion(arr, n, k, low, high);
 }
 
 int main()
@@ -1215,7 +1226,7 @@ int main()
         cin >> array[i];
     }
 
-    int ans = binary_search_in_array(array, n, k);
+    int ans = binary_search_in_array_with_recursion(array, n, k, 0, n - 1);
     cout << "The index of element " << k << " is: " << ans;
 
     // int rows, cols;
