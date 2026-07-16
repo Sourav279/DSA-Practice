@@ -1281,6 +1281,16 @@ int upper_bound_(vector<int> &arr, int n, int k)
     return ans;
 }
 
+int find_index_to_insert_in_sorted_array(vector<int> &arr, int n, int k)
+{
+    // Find index to insert the element so that it should be remain sorted
+    // Same as finding the lower_bound
+    // Time complexity = O(logn)
+    int ans = n;
+    ans = lower_bound(arr.begin(), arr.end(), k) - arr.begin();
+    return ans;
+}
+
 int main()
 {
 
