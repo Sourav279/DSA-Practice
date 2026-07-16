@@ -1247,6 +1247,40 @@ int lower_bound_(vector<int> &arr, int n, int k)
     return ans;
 }
 
+int upper_bound_(vector<int> &arr, int n, int k)
+{
+
+    // Smallest index for which arr[x] > k
+    // It should be the just next greater element than k
+    // If not found then give length of array as hypothetical index.
+    // If there are same elements then give the lowest index
+    // Time complexity is O(logn)
+
+    // Implementation of below algo
+    //  int ans = n;
+    //  int low = 0;
+    //  int high = n - 1;
+    //  while (low <= high)
+    //  {
+    //      int mid = low + (low + high) / 2;
+
+    //     if (arr[mid] <= k)
+    //     {
+    //         low = mid + 1;
+    //     }
+    //     else
+    //     {
+    //         ans = mid;
+    //         high = mid - 1;
+    //     }
+    // }
+    // return ans;
+
+    int ans = n;
+    ans = upper_bound(arr.begin(), arr.end(), k) - arr.begin();
+    return ans;
+}
+
 int main()
 {
 
@@ -1260,8 +1294,11 @@ int main()
         cin >> array[i];
     }
 
-    int ans = lower_bound_(array, n, k);
-    cout << "The index of lower bound of " << k << " is: " << ans;
+    int ans = upper_bound_(array, n, k);
+    cout << "The index of upper bound of " << k << " is: " << ans;
+
+    // int ans = lower_bound_(array, n, k);
+    // cout << "The index of lower bound of " << k << " is: " << ans;
 
     // int ans = binary_search_in_array_with_recursion(array, n, k, 0, n - 1);
     // cout << "The index of element " << k << " is: " << ans;

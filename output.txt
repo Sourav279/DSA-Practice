@@ -1,1 +1,1 @@
-The index of lower bound of 13 is: 6
+The index of upper bound of 12 is: 6
