@@ -1213,6 +1213,40 @@ int binary_search_in_array_with_recursion(vector<int> &arr, int n, int k, int lo
     return binary_search_in_array_with_recursion(arr, n, k, low, high);
 }
 
+int lower_bound_(vector<int> &arr, int n, int k)
+{
+
+    // Lower bound is index of element if an element such that arr[i]>=k
+    // It should be the just next greater element than k
+    // If not found then give length of array as hypothetical index.
+    // If there are same elements then give the lowest index
+    // Time complexity is O(logn)
+
+    // Implementation of below algo
+    //  int ans = n;
+    //  int low = 0;
+    //  int high = n - 1;
+    //  while (low <= high)
+    //  {
+    //      int mid = low + (high - low) / 2;
+    //      if (arr[mid] >= k)
+    //      {
+    //          ans = mid;
+    //          high = mid - 1;
+    //      }
+    //      else
+    //      {
+    //          low = mid + 1;
+    //      }
+    //  }
+    //  return ans;
+
+    // Using in buuilt function
+    int ans = n;
+    ans = lower_bound(arr.begin(), arr.end(), k) - arr.begin();
+    return ans;
+}
+
 int main()
 {
 
@@ -1226,8 +1260,11 @@ int main()
         cin >> array[i];
     }
 
-    int ans = binary_search_in_array_with_recursion(array, n, k, 0, n - 1);
-    cout << "The index of element " << k << " is: " << ans;
+    int ans = lower_bound_(array, n, k);
+    cout << "The index of lower bound of " << k << " is: " << ans;
+
+    // int ans = binary_search_in_array_with_recursion(array, n, k, 0, n - 1);
+    // cout << "The index of element " << k << " is: " << ans;
 
     // int rows, cols;
     // cin >> rows >> cols;

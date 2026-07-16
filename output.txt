@@ -1,1 +1,1 @@
-The index of element 7 is: 3
+The index of lower bound of 13 is: 6
