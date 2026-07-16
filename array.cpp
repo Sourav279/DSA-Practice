@@ -1153,6 +1153,55 @@ int number_of_sub_array_with_sum_k(vector<int> arr, int n, int k)
     return count;
 }
 
+int binary_search_in_array(vector<int> arr, int n, int k)
+{
+
+    // to find the index of element k
+    // Data should be sorted for binary search
+    // Binary search  is divding the array from mid and then check  if the element is on left side or right side of mid
+    // This will decrease the iterations and helps in better time complexity.
+
+    // Time complexity = O(n);
+    // Space complexity = O(1);
+    int low = 0;
+    int high = n - 1;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (arr[mid] == k)
+        {
+            return mid;
+        }
+        if (arr[mid] > k)
+        {
+            high = mid - 1;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return -1;
+}
+
+int binary_search_in_array_with_recursion(vector<int> &arr, int n, int k, int low, int high)
+{
+    if (low > high)
+        return -1;
+    int mid = (low + high) / 2;
+    if (arr[mid] == k)
+        return mid;
+    if (arr[mid] > k)
+    {
+        high = mid - 1;
+    }
+    else
+    {
+        low = low + 1;
+    }
+    return binary_search_in_array(arr, n, k, low, high);
+}
+
 int main()
 {
 
@@ -1166,8 +1215,8 @@ int main()
         cin >> array[i];
     }
 
-    int ans = number_of_sub_array_with_sum_k(array, n, k);
-    cout << "Number of sub arrays with sum " << k << ": " << ans;
+    int ans = binary_search_in_array(array, n, k);
+    cout << "The index of element " << k << " is: " << ans;
 
     // int rows, cols;
     // cin >> rows >> cols;
