@@ -1291,6 +1291,10 @@ int find_index_to_insert_in_sorted_array(vector<int> &arr, int n, int k)
     return ans;
 }
 
+int find_index_to_insert_in_sorted_array(vector<int> &arr, int n, int k)
+{
+}
+
 int main()
 {
 
@@ -1304,8 +1308,8 @@ int main()
         cin >> array[i];
     }
 
-    int ans = upper_bound_(array, n, k);
-    cout << "The index of upper bound of " << k << " is: " << ans;
+    int ans = find_index_to_insert_in_sorted_array(array, n, k);
+    cout << "The index of array where element should be inserted to keep array sorted is: " << ans;
 
     // int ans = lower_bound_(array, n, k);
     // cout << "The index of lower bound of " << k << " is: " << ans;
