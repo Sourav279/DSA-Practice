@@ -1351,6 +1351,67 @@ pair<int, int> first_and_last_occurence_in_array(vector<int> &arr, int n, int k)
     return {lb, ub - 1};
 }
 
+int Search_Element_in_Rotated_Sorted_Array(vector<int> &arr, int n, int k)
+{
+
+    // We have given a sorted rotated array in which we need to find the element index
+    // All the elements are unique elements
+    // Brute force
+    // Time complexity = O(n)
+    // Space complexity = O(1)
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (arr[i] == k)
+    //     {
+    //         return i;
+    //     }
+    // }
+    // return -1;
+
+    // Optimal solution
+    // Time complexity = O(log(n))
+    // Space complexity = O(1)
+    // The idea is to use binary search and check if which part is sorted right high or the left
+    // For checking left half is sorted check arr[low] <= arr[mid] and for right arr[mid] <= arr[high]
+    // After checking the sorted portion first check the element k if it is in range any of the left or right
+    // Then remove the search space on basis of in which element can't be present
+
+    int low = 0;
+    int high = n - 1;
+    int ans = -1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == k)
+        {
+            return mid;
+        }
+        if (arr[low] <= arr[mid])
+        {
+            if (arr[low] <= k && arr[mid] >= k)
+            {
+                high = mid - 1;
+            }
+            else
+            {
+                low = mid + 1;
+            }
+        }
+        else
+        {
+            if (arr[mid] <= k && k <= arr[high])
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
+        }
+    }
+    return -1;
+}
+
 int main()
 {
 
@@ -1364,9 +1425,12 @@ int main()
         cin >> array[i];
     }
 
-    pair<int, int> ans = first_and_last_occurence_in_array(array, n, k);
-    cout << "The first occurence of the element in the array is at index: " << ans.first << endl;
-    cout << "The second occurence of the element in the array is at index: " << ans.second;
+    int ans = Search_Element_in_Rotated_Sorted_Array(array, n, k);
+    cout << "The index of the element in the rotated sorted array is: " << ans;
+
+    // pair<int, int> ans = first_and_last_occurence_in_array(array, n, k);
+    // cout << "The first occurence of the element in the array is at index: " << ans.first << endl;
+    // cout << "The second occurence of the element in the array is at index: " << ans.second;
 
     // int ans = find_floor_or_ceil(array, n, k);
     // cout << "The ceil of the element in the array is: " << ans;

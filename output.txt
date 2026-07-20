@@ -1,2 +1,1 @@
-The first occurence of the element in the array is at index: 4
-The second occurence of the element in the array is at index: 6
+The index of the element in the rotated sorted array is: -1
