@@ -1291,8 +1291,64 @@ int find_index_to_insert_in_sorted_array(vector<int> &arr, int n, int k)
     return ans;
 }
 
-int find_index_to_insert_in_sorted_array(vector<int> &arr, int n, int k)
+int find_floor_or_ceil(vector<int> &arr, int n, int k)
 {
+    // Floor is the element in array for which arr[i] <= k
+    // Ceil is the element in array for which arr[i] >= k
+    // Ceil is same as lower_bound
+
+    int ceil_ans = -1;
+    ceil_ans = lower_bound(arr.begin(), arr.end(), k) - arr.begin();
+    return ceil_ans;
+
+    int floor_ans = -1;
+    int low = 0;
+    int high = n - 1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (arr[mid] <= k)
+        {
+            floor_ans = mid;
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
+        }
+    }
+}
+
+pair<int, int> first_and_last_occurence_in_array(vector<int> &arr, int n, int k)
+{
+
+    // Array must be sorted
+    // To find the first and last occurence of element k in sorted array
+    // Time complexity = O(N)
+    // Space complexity = O(1)
+
+    // Brute force solution
+    // int first = -1, last = -1;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (arr[i] == k)
+    //     {
+    //         if (first == -1)
+    //             first = i;
+    //         last = i;
+    //     }
+    // }
+    // return {first, last};
+
+    // Optimal solution
+    // Time complexity = O(log(N) + log(N))
+    // Space complexity = O(1)
+
+    int lb = lower_bound_(arr, n, k);
+    if ((lb == n) || arr[lb] != k)
+        return {-1, -1};
+    int ub = upper_bound_(arr, n, k);
+    return {lb, ub - 1};
 }
 
 int main()
@@ -1308,8 +1364,15 @@ int main()
         cin >> array[i];
     }
 
-    int ans = find_index_to_insert_in_sorted_array(array, n, k);
-    cout << "The index of array where element should be inserted to keep array sorted is: " << ans;
+    pair<int, int> ans = first_and_last_occurence_in_array(array, n, k);
+    cout << "The first occurence of the element in the array is at index: " << ans.first << endl;
+    cout << "The second occurence of the element in the array is at index: " << ans.second;
+
+    // int ans = find_floor_or_ceil(array, n, k);
+    // cout << "The ceil of the element in the array is: " << ans;
+
+    // int ans = find_index_to_insert_in_sorted_array(array, n, k);
+    // cout << "The index of array where element should be inserted to keep array sorted is: " << ans;
 
     // int ans = lower_bound_(array, n, k);
     // cout << "The index of lower bound of " << k << " is: " << ans;

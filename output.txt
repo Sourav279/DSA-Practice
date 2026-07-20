@@ -1,1 +1,2 @@
-The index of upper bound of 13 is: 6
+The first occurence of the element in the array is at index: 4
+The second occurence of the element in the array is at index: 6
