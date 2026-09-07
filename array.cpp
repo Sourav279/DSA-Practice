@@ -1153,6 +1153,30 @@ int number_of_sub_array_with_sum_k(vector<int> arr, int n, int k)
     return count;
 }
 
+// --------------- pascal triangle start ------------------------
+
+long long combination_nCr(int n, int r)
+{
+    long long ans = 1;
+    // Find minimum of both and then find factorial upto that number and divide with same number factorial;
+    int m = min(r, n - r);
+    for (int i = 0; i < m; i++)
+    {
+        ans = ans * n / (i + 1);
+        n--;
+    }
+    return ans;
+}
+long long find_num_at_row_col_in_pascal_triangle(int row, int col)
+{
+    long long ans;
+    // To find number at that point just find combination of row -1 and col -1 (row-1 C col-1)
+    ans = combination_nCr(row - 1, col - 1);
+    return ans;
+}
+
+// ---------------- pascal triangle stop ----------------
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -1414,19 +1438,23 @@ int Search_Element_in_Rotated_Sorted_Array(vector<int> &arr, int n, int k)
 
 int main()
 {
+    int row, col;
+    cin >> row;
+    cin >> col;
+    long long ans = find_num_at_row_col_in_pascal_triangle(row, col);
+    cout << "The element at position (" << row << ", " << col << ") in the pascal triangle is: " << ans;
+    // int n;
+    // cin >> n;
+    // int k;
+    // cin >> k;
+    // vector<int> array(n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> array[i];
+    // }
 
-    int n;
-    cin >> n;
-    int k;
-    cin >> k;
-    vector<int> array(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> array[i];
-    }
-
-    int ans = Search_Element_in_Rotated_Sorted_Array(array, n, k);
-    cout << "The index of the element in the rotated sorted array is: " << ans;
+    // int ans = Search_Element_in_Rotated_Sorted_Array(array, n, k);
+    // cout << "The index of the element in the rotated sorted array is: " << ans;
 
     // pair<int, int> ans = first_and_last_occurence_in_array(array, n, k);
     // cout << "The first occurence of the element in the array is at index: " << ans.first << endl;
