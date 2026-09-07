@@ -1197,6 +1197,17 @@ void print_pascal_triangle_nth_row(int n)
     }
 }
 
+void pascal_triangle(int n)
+{
+    // This approach uses the above solution to get the nth row of pascal triangle.
+    // Time complexity = O(n*n)
+    for (int i = 1; i <= n; i++)
+    {
+        print_pascal_triangle_nth_row(i);
+        cout << endl;
+    }
+}
+
 // ---------------- pascal triangle stop ----------------
 
 int binary_search_in_array(vector<int> arr, int n, int k)
@@ -1462,7 +1473,9 @@ int main()
 {
     int n;
     cin >> n;
-    print_pascal_triangle_nth_row(n);
+    pascal_triangle(n);
+
+    // print_pascal_triangle_nth_row(n);
 
     // int row, col;
     // cin >> row;
