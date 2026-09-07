@@ -1175,6 +1175,28 @@ long long find_num_at_row_col_in_pascal_triangle(int row, int col)
     return ans;
 }
 
+void print_pascal_triangle_nth_row(int n)
+{
+    // Brute force method
+    //  Use the above method of combination to print the nth row of the pascal triangle
+    //  Time complexity O(n*r)
+    // for (int col = 1; col <= n; col++)
+    // {
+    //     cout << find_num_at_row_col_in_pascal_triangle(n, col) << " ";
+    // }
+
+    // Better approach
+    // The approach is to multiply and divide only the extra number erverytime for new number instead of calculate whole value
+    // Time Complexity - O(N)
+    long long ans = 1;
+    cout << ans << " ";
+    for (int i = 1; i < n; i++)
+    {
+        ans = ans * (n - i) / i;
+        cout << ans << " ";
+    }
+}
+
 // ---------------- pascal triangle stop ----------------
 
 int binary_search_in_array(vector<int> arr, int n, int k)
@@ -1438,13 +1460,16 @@ int Search_Element_in_Rotated_Sorted_Array(vector<int> &arr, int n, int k)
 
 int main()
 {
-    int row, col;
-    cin >> row;
-    cin >> col;
-    long long ans = find_num_at_row_col_in_pascal_triangle(row, col);
-    cout << "The element at position (" << row << ", " << col << ") in the pascal triangle is: " << ans;
-    // int n;
-    // cin >> n;
+    int n;
+    cin >> n;
+    print_pascal_triangle_nth_row(n);
+
+    // int row, col;
+    // cin >> row;
+    // cin >> col;
+    // long long ans = find_num_at_row_col_in_pascal_triangle(row, col);
+    // cout << "The element at position (" << row << ", " << col << ") in the pascal triangle is: " << ans;
+
     // int k;
     // cin >> k;
     // vector<int> array(n);
