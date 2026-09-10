@@ -1208,6 +1208,77 @@ void pascal_triangle(int n)
     }
 }
 
+vector<int> majority_element_n_by_3_times(vector<int> &arr, int n)
+{
+    // Find the elements that appear more than n/3 times in the array
+    // According to the observation at max there can be 2 elements that can be more than n/3 times.
+
+    // Better solution
+    // Time Complexity = O(N) or O(N*N) Worst case due to unordered map
+    // Space Complexity = O(N)
+    // unordered_map<int, int> mpp;
+    // int val = n / 3 + 1;
+    // vector<int> ans;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     mpp[arr[i]]++;
+    //     if (mpp[arr[i]] == val)
+    //     {
+    //         ans.push_back(arr[i]);
+    //     }
+    //     if (ans.size() == 2)
+    //         break;
+    // }
+    // return ans;
+
+    // Optimal solution
+    // Idea is to use the same majority  element approach but as we know there are 2 elements then we store 2 values in 2 variables
+    // Time Complexity = O(2*N)
+    // Space Complexity = O(1)
+    int el1 = INT_MIN, el2 = INT_MIN;
+    int count1 = 0, count2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (count1 == 0 && el2 != arr[i])
+        {
+            count1++;
+            el1 = arr[i];
+        }
+        else if (count2 == 0 && el1 != arr[i])
+        {
+            count2++;
+            el2 = arr[i];
+        }
+        else if (arr[i] == el1)
+            count1++;
+        else if (arr[i] == el2)
+            count2++;
+        else
+        {
+            count1--;
+            count2--;
+        }
+    }
+    vector<int> ans;
+    count1 = 0;
+    count2 = 0;
+    // Reverify the element that they are the majority elements
+    for (int i = 0; i < n; i++)
+    {
+        if (el1 == arr[i])
+            count1++;
+        else if (el2 == arr[i])
+            count2++;
+    }
+    int minimum_times = (int)(n / 3) + 1;
+    if (count1 >= minimum_times)
+        ans.push_back(el1);
+    if (count2 >= minimum_times)
+        ans.push_back(el2);
+
+    return ans;
+}
+
 // ---------------- pascal triangle stop ----------------
 
 int binary_search_in_array(vector<int> arr, int n, int k)
@@ -1473,7 +1544,18 @@ int main()
 {
     int n;
     cin >> n;
-    pascal_triangle(n);
+    vector<int> array(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> array[i];
+    }
+
+    vector<int> ans = majority_element_n_by_3_times(array, n);
+    for (auto i : ans)
+    {
+        cout << i << " ";
+    }
+    // pascal_triangle(n);
 
     // print_pascal_triangle_nth_row(n);
 
@@ -1485,11 +1567,6 @@ int main()
 
     // int k;
     // cin >> k;
-    // vector<int> array(n);
-    // for (int i = 0; i < n; i++)
-    // {
-    //     cin >> array[i];
-    // }
 
     // int ans = Search_Element_in_Rotated_Sorted_Array(array, n, k);
     // cout << "The index of the element in the rotated sorted array is: " << ans;
