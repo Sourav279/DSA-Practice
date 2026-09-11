@@ -1208,6 +1208,8 @@ void pascal_triangle(int n)
     }
 }
 
+// ---------------- pascal triangle stop ----------------
+
 vector<int> majority_element_n_by_3_times(vector<int> &arr, int n)
 {
     // Find the elements that appear more than n/3 times in the array
@@ -1279,7 +1281,92 @@ vector<int> majority_element_n_by_3_times(vector<int> &arr, int n)
     return ans;
 }
 
-// ---------------- pascal triangle stop ----------------
+vector<vector<int>> three_sum_problem(vector<int> &arr, int n)
+{
+    // Three sum is arr[i] + arr[j] + arr[k] = 0 where i != j != k
+
+    // Brute force
+    // Idea is that make all subarray of size 3 and find the sum then
+    // Time complexity = O(n*n*n) * O(log n) for set data structure
+    // Space complexity = 2 * O(no. of triplets)
+    // set<vector<int>> st;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = i + 1; j < n; j++)
+    //     {
+    //         for (int k = j + 1; k < n; k++)
+    //         {
+    //             if ((arr[i] + arr[j] + arr[k]) == 0)
+    //             {
+    //                 vector<int> temp = {arr[i], arr[j], arr[k]};
+    //                 sort(temp.begin(), temp.end());
+    //                 st.insert(temp);
+    //             }
+    //         }
+    //     }
+    // }
+    // vector<vector<int>> ans(st.begin(), st.end());
+    // return ans;
+
+    // Better approach
+    // Idea is to store the elements between the two selected elements (i,j) so that  we can reduce time complexity to n*2
+    // Time complexity = O(n*2) * O(log n) for set data structure
+    // Space complexity = O(N) + O(no. of triplets)*2
+    // set<vector<int>> st;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     set<int> hashed;
+    //     for (int j = i + 1; j < n; j++)
+    //     {
+    //         int third = -(arr[i] + arr[j]);
+    //         if (hashed.find(third) != hashed.end())
+    //         {
+
+    //             vector<int> temp = {arr[i], arr[j], third};
+    //             sort(temp.begin(), temp.end());
+    //             st.insert(temp);
+    //         }
+    //         hashed.insert(arr[j]);
+    //     }
+    // }
+    // vector<vector<int>> ans(st.begin(), st.end());
+    // return ans;
+
+    // Optimal approach
+    // The idea is to first sort the array and then use 3 pointer approach to get the elements
+    vector<vector<int>> ans;
+    sort(arr.begin(), arr.end());
+    for (int i = 0; i < n; i++)
+    {
+        if (i > 0 && arr[i] == arr[i - 1])
+            continue;
+        int j = i + 1, k = n - 1;
+        while (j < k)
+        {
+            long sum = arr[i] + arr[j] + arr[k];
+            if (sum > 0)
+            {
+                k--;
+            }
+            else if (sum < 0)
+            {
+                j++;
+            }
+            else
+            {
+                vector<int> temp = {arr[i], arr[j], arr[k]};
+                ans.push_back(temp);
+                j++;
+                k--;
+                while (j < k && arr[j] == arr[j - 1])
+                    j++;
+                while (j < k && arr[k] == arr[k + 1])
+                    k--;
+            }
+        }
+    }
+    return ans;
+}
 
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
@@ -1550,11 +1637,22 @@ int main()
         cin >> array[i];
     }
 
-    vector<int> ans = majority_element_n_by_3_times(array, n);
-    for (auto i : ans)
+    vector<vector<int>> ans = three_sum_problem(array, n);
+    for (auto j : ans)
     {
-        cout << i << " ";
+        for (auto i : j)
+        {
+
+            cout << i << " ";
+        }
+        cout << endl;
     }
+
+    // vector<int> ans = majority_element_n_by_3_times(array, n);
+    // for (auto i : ans)
+    // {
+    //     cout << i << " ";
+    // }
     // pascal_triangle(n);
 
     // print_pascal_triangle_nth_row(n);
