@@ -1334,6 +1334,8 @@ vector<vector<int>> three_sum_problem(vector<int> &arr, int n)
 
     // Optimal approach
     // The idea is to first sort the array and then use 3 pointer approach to get the elements
+    // Time complexity = O(n*2) * O(nlog n) for sorting
+    // Space complexity = O(no. of triplets)*2
     vector<vector<int>> ans;
     sort(arr.begin(), arr.end());
     for (int i = 0; i < n; i++)
