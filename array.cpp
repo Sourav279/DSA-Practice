@@ -1370,6 +1370,121 @@ vector<vector<int>> three_sum_problem(vector<int> &arr, int n)
     return ans;
 }
 
+vector<vector<int>> four_sum_problem(vector<int> &arr, int n, int target)
+{
+    // Four sum is arr[i] + arr[j] + arr[k] = 0 or target sun where i != j != k != l
+
+    // Brute force
+    // Idea is that make all subarray of size 4 and find the sum then
+    // Time complexity = O(n**4) * O(log n) for set data structure
+    // Space complexity = O(no. of quades) * 2
+    // set<vector<int>> st;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = i + 1; j < n; j++)
+    //     {
+    //         if (i == j)
+    //             continue;
+    //         for (int k = j + 1; k < n; k++)
+    //         {
+    //             if (i == k || j == k)
+    //                 continue;
+    //             for (int l = k + 1; l < n; l++)
+    //             {
+    //                 if (i == l || j == l || k == l)
+    //                     continue;
+    //                 if ((arr[i] + arr[j] + arr[k] + arr[l]) == 0)
+    //                 {
+    //                     vector<int> temp = {arr[i], arr[j], arr[k], arr[l]};
+    //                     sort(temp.begin(), temp.end());
+    //                     st.insert(temp);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // vector<vector<int>> ans(st.begin(), st.end());
+    // return ans;
+
+    // Better solution
+    //  Time complexity = O(logn * n**3)
+    //  Idea is to store the elements between the two selected elements (j,k) so that  we can reduce time complexity to n**3
+    //  Space complexity = O(n) + O(No. of quades) * 2
+    // vector<vector<int>> ans;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = i + 1; j < n; j++)
+    //     {
+    //         set<int> hashset;
+    //         for (int k = j + 1; k < n; k++)
+    //         {
+    //             long long sum = arr[i];
+    //             sum += arr[j];
+    //             sum += arr[k];
+    //             long long missing = target - sum;
+    //             if (hashset.find(missing) != hashset.end())
+    //             {
+    //                 vector<int> temp = {arr[i], arr[j], arr[k], (int)missing};
+    //                 sort(temp.begin(), temp.end());
+    //                 ans.push_back(temp);
+    //             }
+    //             hashset.insert(arr[k]);
+    //         }
+    //     }
+    // }
+    // return ans;
+
+    // Optimal soltution
+    // The idea is to first sort the array and then use 4 pointer approach to get the elements
+    // If sum is greater than target then we will move towards left and if sum is less than target we will move towards right
+    // If sum will be equal then we will move both  pointer left and right respectively until it doesnot match the previous element
+    // Time Complexity = O(n**3) + O(nlogn) for sorting
+    // Space complexity = O(no. of  quades)
+    vector<vector<int>> ans;
+    sort(arr.begin(), arr.end());
+    for (int i = 0; i < n; i++)
+    {
+        if (i != 0 && arr[i] == arr[i - 1])
+            continue;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (j != i + 1 && arr[j] == arr[j - 1])
+                continue;
+            int k = j + 1;
+            int l = n - 1;
+            while (k < l)
+            {
+                long long sum = arr[i] + arr[j];
+                sum += arr[k];
+                sum += arr[l];
+                if (sum == target)
+                {
+                    vector<int> temp = {arr[i], arr[j], arr[k], arr[l]};
+                    ans.push_back(temp);
+                    k++;
+                    l--;
+                    // To remove duplicates so that we dont end up choosing the same value again and again
+                    while (k < l && arr[k - 1] == arr[k])
+                        k++;
+                    // To remove duplicates so that we dont end up choosing the same value again and again
+                    while (k < l && arr[l - 1] == arr[l])
+                        l--;
+                }
+                else if (sum > target)
+                {
+                    l--;
+                }
+                else
+                {
+                    k++;
+                }
+            }
+        }
+    }
+
+    return ans;
+}
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -1633,13 +1748,17 @@ int main()
 {
     int n;
     cin >> n;
+
+    int target;
+    cin >> target;
+
     vector<int> array(n);
     for (int i = 0; i < n; i++)
     {
         cin >> array[i];
     }
 
-    vector<vector<int>> ans = three_sum_problem(array, n);
+    vector<vector<int>> ans = four_sum_problem(array, n, target);
     for (auto j : ans)
     {
         for (auto i : j)
@@ -1649,6 +1768,17 @@ int main()
         }
         cout << endl;
     }
+
+    // vector<vector<int>> ans = three_sum_problem(array, n);
+    // for (auto j : ans)
+    // {
+    //     for (auto i : j)
+    //     {
+
+    //         cout << i << " ";
+    //     }
+    //     cout << endl;
+    // }
 
     // vector<int> ans = majority_element_n_by_3_times(array, n);
     // for (auto i : ans)
