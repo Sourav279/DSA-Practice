@@ -1167,6 +1167,7 @@ long long combination_nCr(int n, int r)
     }
     return ans;
 }
+
 long long find_num_at_row_col_in_pascal_triangle(int row, int col)
 {
     long long ans;
@@ -1485,6 +1486,69 @@ vector<vector<int>> four_sum_problem(vector<int> &arr, int n, int target)
     return ans;
 }
 
+int Number_of_Subarrays_with_xor_K(vector<int> &arr, int n, int target)
+{
+    // No. of sub arrays with xor == K
+
+    // Brute force
+    // Create all the subarray and check the XOR of each subarray and compare it
+    // Time complexity = O(N**3)
+    // Space complexity = O(1)
+    // int count = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = i; j < n; j++)
+    //     {
+    //         int xor_val = 0;
+    //         for (int k = i; k <= j; k++)
+    //         {
+    //             xor_val = xor_val ^ arr[k];
+    //         }
+    //         if (xor_val == target)
+    //             count++;
+    //     }
+    // }
+    // return count;
+
+    // Better solution
+    // Time complexity = O(N**2)
+    // Space complexity = O(1)
+    // int count = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int xor_val = 0;
+    //     for (int j = i; j < n; j++)
+    //     {
+    //         xor_val ^= arr[j];
+    //         if (xor_val == target)
+    //             count++;
+    //     }
+    // }
+    // return count;
+
+    // Optimal solution
+    // Time complexity = O(N * logN) -> Extra logN for finding element in map
+    // Space complexity = O(N)
+    // The idea is the if upto an element the xor of all previous element and currrent element is XR
+    // current_prefix_XOR ^ previous_prefix_XOR = target
+    // previous_prefix_XOR = current_prefix_XOR ^ target
+    // then we need to check if there is any element or previous subarray with xor = XR^target then it means that is subarray upto that  which has xor = target
+    // x ^ target = XR where XR is XOR upto that element and target already given and x is XOR upto current element
+    int count = 0;
+    int xr = 0;
+    map<int, int> mt;
+    mt[xr]++;
+    for (int i = 0; i < n; i++)
+    {
+        xr = xr ^ arr[i];
+        int x = xr ^ target;
+
+        count += mt[x];
+        mt[xr]++;
+    }
+    return count;
+}
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -1758,16 +1822,19 @@ int main()
         cin >> array[i];
     }
 
-    vector<vector<int>> ans = four_sum_problem(array, n, target);
-    for (auto j : ans)
-    {
-        for (auto i : j)
-        {
+    int ans = Number_of_Subarrays_with_xor_K(array, n, target);
+    cout << "The no. of subarrays having xor = " << target << " is " << ans;
 
-            cout << i << " ";
-        }
-        cout << endl;
-    }
+    // vector<vector<int>> ans = four_sum_problem(array, n, target);
+    // for (auto j : ans)
+    // {
+    //     for (auto i : j)
+    //     {
+
+    //         cout << i << " ";
+    //     }
+    //     cout << endl;
+    // }
 
     // vector<vector<int>> ans = three_sum_problem(array, n);
     // for (auto j : ans)
