@@ -1549,6 +1549,61 @@ int Number_of_Subarrays_with_xor_K(vector<int> &arr, int n, int target)
     return count;
 }
 
+vector<vector<int>> merge_overlapping_sub_intervals(vector<vector<int>> &arr, int n)
+{
+
+    // Time complexity = O(n*n) + O(nlogn) for sorting
+    // Space complexity = O(Number of pairs of ranges)
+    // The idea is to first compare the previous pair second element with current pair first element.
+    // If second element is greater and it means it should comme under same pair
+    // Brute force approach
+
+    // vector<vector<int>> ans;
+    // sort(arr.begin(), arr.end());
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int start = arr[i][0];
+    //     int end = arr[i][1];
+    //     if (!ans.empty() && end <= ans.back()[1])
+    //         continue;
+    //     for (int j = i + 1; j < n; j++)
+    //     {
+    //         if (arr[j][0] <= end)
+    //         {
+    //             end = max(end, arr[j][1]);
+    //         }
+    //         else
+    //         {
+    //             break;
+    //         }
+    //     }
+    //     ans.push_back({start, end});
+    // }
+    // return ans;
+
+    // Optimal approach
+    // Time complexity = O(n) + O(nlogn) for sorting
+    // Space complexity = O(Number of pairs of ranges)
+
+    vector<vector<int>> ans;
+    sort(arr.begin(), arr.end());
+    for (int i = 0; i < n; i++)
+    {
+        int start = arr[i][0];
+        int end = arr[i][1];
+        if (ans.empty() || (start > ans.back()[1]))
+        {
+            ans.push_back(arr[i]);
+        }
+        else
+        {
+            ans.back()[1] = max(ans.back()[1], end);
+        }
+    }
+    return ans;
+}
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -1813,17 +1868,22 @@ int main()
     int n;
     cin >> n;
 
-    int target;
-    cin >> target;
-
-    vector<int> array(n);
+    vector<vector<int>> array(n, vector<int>(2));
     for (int i = 0; i < n; i++)
     {
-        cin >> array[i];
+        for (int j = 0; j < 2; j++)
+        {
+            cin >> array[i][j];
+        }
     }
 
-    int ans = Number_of_Subarrays_with_xor_K(array, n, target);
-    cout << "The no. of subarrays having xor = " << target << " is " << ans;
+    vector<vector<int>> ans = merge_overlapping_sub_intervals(array, n);
+    for (vector<int> i : ans)
+    {
+        cout << i[0] << " " << i[1] << endl;
+    }
+    // int ans = Number_of_Subarrays_with_xor_K(array, n, target);
+    // cout << "The no. of subarrays having xor = " << target << " is " << ans;
 
     // vector<vector<int>> ans = four_sum_problem(array, n, target);
     // for (auto j : ans)
