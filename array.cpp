@@ -1604,6 +1604,74 @@ vector<vector<int>> merge_overlapping_sub_intervals(vector<vector<int>> &arr, in
     return ans;
 }
 
+void merge_two_sorted_arrray_without_extra_space(vector<int> &arr1, vector<int> &arr2)
+{
+    // Approach is to swap largest element from the first array to the second array so that smaller part will be in left side.
+    // After this sort the both arrays
+
+    // Optimal solution 1
+    // Time complexity - O(min(n,m)) + O(nlogn) + O(mlogm)
+    // Space Complexity - O(1)
+    int n = arr1.size();
+    int m = arr2.size();
+    int i = n - 1;
+    int j = 0;
+    while (arr1[i] > arr2[j] && i >= 0 && j < m)
+    {
+        swap(arr1[i], arr2[j]);
+        i--;
+        j++;
+    }
+    sort(arr1.begin(), arr1.end());
+    sort(arr2.begin(), arr2.end());
+
+    // Optimal solution 2
+    //  Approach is to use the gap between the left and right pointer to check for the element comparing
+    // It will automatically sort and place the element in correct array
+    //  gap will be the ceil(average of length)
+    //  Time complexity - O((n+m)*(log(n+m))
+    //  Space Complexity - O(1)
+    // int len = (n + m);
+    // int gap = (len / 2) + (len % 2);
+    // while (gap > 0)
+    // {
+    //     int left = 0;
+    //     int right = left + gap;
+    //     while (right < len)
+    //     {
+    //         // compare arr1 && arr 2
+    //         if (left < n && right >= n)
+    //         {
+    //             if (arr1[left] > arr2[right - n])
+    //             {
+    //                 swap(arr1[left], arr2[right - n]);
+    //             }
+    //         }
+    //         // compare arr2 && arr 2
+    //         else if (left >= n)
+    //         {
+    //             if (arr2[left - n] > arr2[right - n])
+    //             {
+    //                 swap(arr2[left - n], arr2[right - n]);
+    //             }
+    //         }
+    //         // compare arr1 & arr1
+    //         else
+    //         {
+    //             if (arr1[left] > arr1[right])
+    //             {
+    //                 swap(arr1[left], arr1[right]);
+    //             }
+    //         }
+    //         left++;
+    //         right++;
+    //     }
+    //     if (gap == 1)
+    //         break;
+    //     gap = (gap / 2) + (gap % 2);
+    // }
+}
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -1865,23 +1933,46 @@ int Search_Element_in_Rotated_Sorted_Array(vector<int> &arr, int n, int k)
 
 int main()
 {
-    int n;
+    int n, m;
     cin >> n;
+    cin >> m;
 
-    vector<vector<int>> array(n, vector<int>(2));
+    vector<int> arr1(n);
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < 2; j++)
-        {
-            cin >> array[i][j];
-        }
+        cin >> arr1[i];
+    }
+    vector<int> arr2(m);
+    for (int i = 0; i < m; i++)
+    {
+        cin >> arr2[i];
     }
 
-    vector<vector<int>> ans = merge_overlapping_sub_intervals(array, n);
-    for (vector<int> i : ans)
+    merge_two_sorted_arrray_without_extra_space(arr1, arr2);
+    for (int i : arr1)
     {
-        cout << i[0] << " " << i[1] << endl;
+        cout << i << " ";
     }
+    cout << endl;
+    for (int i : arr2)
+    {
+        cout << i << " ";
+    }
+
+    // vector<vector<int>> array(n, vector<int>(2));
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < 2; j++)
+    //     {
+    //         cin >> array[i][j];
+    //     }
+    // }
+
+    // vector<vector<int>> ans = merge_overlapping_sub_intervals(array, n);
+    // for (vector<int> i : ans)
+    // {
+    //     cout << i[0] << " " << i[1] << endl;
+    // }
     // int ans = Number_of_Subarrays_with_xor_K(array, n, target);
     // cout << "The no. of subarrays having xor = " << target << " is " << ans;
 
