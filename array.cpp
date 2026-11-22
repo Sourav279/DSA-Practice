@@ -1672,6 +1672,92 @@ void merge_two_sorted_arrray_without_extra_space(vector<int> &arr1, vector<int> 
     // }
 }
 
+pair<int, int> find_missing_and_repeating_number(vector<int> &arr, int n)
+{
+    // We are given an array for numbers from 1 to n with 1 number missing and 1 number is repeated
+    // We need to find missing nummber from 1 to n and repeated number from 1 to n in the array
+
+    // Brute force solution
+    // Check each element and iterate through the array
+    // Time complexity = O(n*n)
+    // Space complexity = O(1);
+    // int missing = -1, repeating = -1;
+    // for (int i = 1; i <= n; i++)
+    // {
+    //     int count = 0;
+    //     for (int j = 0; j < n; j++)
+    //     {
+    //         if (i == arr[j])
+    //             count++;
+    //     }
+    //     if (count == 0)
+    //         missing = i;
+    //     if (count == 2)
+    //         repeating = i;
+    //     if (missing != -1 && repeating != -1)
+    //     {
+    //         break;
+    //     }
+    // }
+    // return {missing, repeating};
+
+    //  Better approach
+    //  Store  occurance in an array for each number and in the end iterate int that count array and return missing and repeating number
+    //  Time complexity = O(n+n)
+    //  Space complxity = O(n)
+    // vector<int> count(n + 1, 0);
+    // int missing = -1, repeating = -1;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     count[arr[i]]++;
+    // }
+    // for (int i = 1; i < n + 1; i++)
+    // {
+    //     if (count[i] == 0)
+    //         missing = i;
+    //     if (count[i] == 2)
+    //         repeating = i;
+    //     if (missing != -1 && repeating != -1)
+    //     {
+    //         break;
+    //     }
+    // }
+    // return {missing, repeating};
+
+    // Optimal appraoch
+    // assume x as missing number and y as repeating number
+    // Generate the equations for x-y = s1 and x+y=s2
+    // To generate x+y we need to find x^2 -y^2 as x^2-y^2 = (x-y)(x+y)
+    // After that we can get value of x and y
+    //  Time complexity = O(n)
+    //  Space complxity = O(1)
+
+    int sum_of_numbers = 0;
+    int sum_of_square_of_numbers = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum_of_numbers += arr[i];
+        sum_of_square_of_numbers += arr[i] * arr[i];
+    }
+    long long sum_of_n_natural_numbers = n * (n + 1) / 2;
+    long long sum_of_squares_of_n_natural_numbers = n * (n + 1) * (2 * n + 1) / 6;
+
+    // it will generate x - y = s1; ======1
+    long long diff_of_nums = sum_of_numbers - sum_of_n_natural_numbers;
+
+    // it will genrate x^2 -y^2 = s2;
+    long long diff_of_square_nums = sum_of_square_of_numbers - sum_of_squares_of_n_natural_numbers;
+
+    // it will generate x + y = s3; ==========2 by using the equation x^2-y^2 = (x-y)(x+y)
+    long long sum_of_nums = diff_of_square_nums / diff_of_nums;
+
+    // By solving the equations 1 and 2 we get 2x = s1+s3 => x = (s1+s3)/2
+    long long missing = (diff_of_nums + sum_of_nums) / 2;
+    long long repeating = sum_of_nums - missing;
+
+    return {(int)missing, (int)repeating};
+}
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -1935,29 +2021,40 @@ int main()
 {
     int n, m;
     cin >> n;
-    cin >> m;
 
-    vector<int> arr1(n);
+    vector<int> arr(n);
     for (int i = 0; i < n; i++)
     {
-        cin >> arr1[i];
-    }
-    vector<int> arr2(m);
-    for (int i = 0; i < m; i++)
-    {
-        cin >> arr2[i];
+        cin >> arr[i];
     }
 
-    merge_two_sorted_arrray_without_extra_space(arr1, arr2);
-    for (int i : arr1)
-    {
-        cout << i << " ";
-    }
-    cout << endl;
-    for (int i : arr2)
-    {
-        cout << i << " ";
-    }
+    pair<int, int> ans = find_missing_and_repeating_number(arr, n);
+    cout << "missing: " << ans.first << endl;
+    cout << "repeating: " << ans.second << endl;
+
+    // cin >> m;
+
+    // vector<int> arr1(n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> arr1[i];
+    // }
+    // vector<int> arr2(m);
+    // for (int i = 0; i < m; i++)
+    // {
+    //     cin >> arr2[i];
+    // }
+
+    // merge_two_sorted_arrray_without_extra_space(arr1, arr2);
+    // for (int i : arr1)
+    // {
+    //     cout << i << " ";
+    // }
+    // cout << endl;
+    // for (int i : arr2)
+    // {
+    //     cout << i << " ";
+    // }
 
     // vector<vector<int>> array(n, vector<int>(2));
     // for (int i = 0; i < n; i++)
