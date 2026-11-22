@@ -1758,6 +1758,80 @@ pair<int, int> find_missing_and_repeating_number(vector<int> &arr, int n)
     return {(int)missing, (int)repeating};
 }
 
+int countInversion = 0;
+
+int merge_sort_for_count_inversion(vector<int> &arr, int low, int high)
+{
+    int countInversion = 0;
+    if (low >= high)
+        return countInversion;
+    int mid = (low + high) / 2;
+    countInversion += merge_sort_for_count_inversion(arr, low, mid);
+    countInversion += merge_sort_for_count_inversion(arr, mid + 1, high);
+    vector<int> temp_array;
+    int left = low;
+    int right = mid + 1;
+    while (left <= mid && right <= high)
+    {
+        if (arr[left] <= arr[right])
+        {
+            temp_array.push_back(arr[left]);
+            left++;
+        }
+        else
+        {
+            temp_array.push_back(arr[right]);
+            countInversion += (mid - left + 1);
+            right++;
+        }
+    }
+    while (left <= mid)
+    {
+        temp_array.push_back(arr[left]);
+        left++;
+    }
+    while (right <= high)
+    {
+        temp_array.push_back(arr[right]);
+        right++;
+    }
+    for (int i = low; i <= high; i++)
+    {
+        arr[i] = temp_array[i - low];
+    }
+    return countInversion;
+}
+
+int count_inversion(vector<int> &arr, int n)
+{
+    // Count the pairs for which arr[i] > arr[j] where i<j
+
+    // Brute force
+    // Time complexity =  O(n*n)
+    // Space Complexity = O(1)
+    // int count = 0;
+    // for (int i = 0; i < n - 1; i++)
+    // {
+    //     for (int j = i + 1; j < n; j++)
+    //     {
+    //         if (arr[i] > arr[j])
+    //         {
+    //             count++;
+    //         }
+    //     }
+    // }
+    // return count;
+
+    // Optimal solution using merge sort
+    // The idea is that  we will count the elements which are smaller than the left element according to sorted array
+    // So that we can add number equal to the elements present on right side on element in current array.
+    // as all the elements on the right will be greater than the current element in sorted array
+    // Time complexity =  O(n*logn)
+    // Space Complexity = O(n)
+    int countInversion = merge_sort_for_count_inversion(arr, 0, n - 1);
+    return countInversion;
+}
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -2028,9 +2102,12 @@ int main()
         cin >> arr[i];
     }
 
-    pair<int, int> ans = find_missing_and_repeating_number(arr, n);
-    cout << "missing: " << ans.first << endl;
-    cout << "repeating: " << ans.second << endl;
+    int ans = count_inversion(arr, n);
+    cout << "No. of pairs that can be created for arr[i]>arr[j+1] where i<j: " << ans << endl;
+
+    // pair<int, int> ans = find_missing_and_repeating_number(arr, n);
+    // cout << "missing: " << ans.first << endl;
+    // cout << "repeating: " << ans.second << endl;
 
     // cin >> m;
 

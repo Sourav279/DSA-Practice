@@ -1,2 +1,1 @@
-missing: 1
-repeating: 5
+No. of pairs that can be created for arr[i]>arr[j+1] where i<j: 8
