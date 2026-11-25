@@ -1916,6 +1916,49 @@ int reverse_pairs(vector<int> &arr, int n)
     return countReversePair;
 }
 
+int maximum_product_subarray(vector<int> &arr, int n)
+{
+    // Find the subarray with maixmum product and return the maximum product
+
+    // Brute force
+    // Time Complexity = O(n*n)
+    // Space Complexity = O(1)
+
+    // int max_product = INT_MIN;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int product = 1;
+    //     for (int j = i; j < n; j++)
+    //     {
+    //         product *= arr[j];
+    //         max_product = max(max_product, product);
+    //     }
+    // }
+    // return max_product;
+
+    // Optimal solution
+    // The approach is if we have odd no. of -ve numbers then either we need to skip the first -ve or last -ve so that rest can be +ve and max
+    // Incase if 0 is the number then we need to check restart the product as after 0 we need to calculate subarrays seprately for max product because we can't include 0 in any subarray
+    // For all +ve or even -ve we can multiply all numbers
+    // Time Complexity = O(n)
+    // Space Complexity = O(1)
+
+    int max_product = INT_MIN;
+    int prefix = 1, suffix = 1;
+    for (int i = 0; i < n; i++)
+    {
+        if (prefix == 0)
+            prefix = 1;
+        if (arr[n - i - 1] == 0)
+            suffix = 1;
+
+        prefix *= arr[i];
+        suffix *= arr[n - i - 1];
+        max_product = max(max_product, max(prefix, suffix));
+    }
+    return max_product;
+}
+
 int binary_search_in_array(vector<int> arr, int n, int k)
 {
 
@@ -2186,8 +2229,11 @@ int main()
         cin >> arr[i];
     }
 
-    int ans = reverse_pairs(arr, n);
-    cout << "No. of pairs that can be created for arr[i]>2* arr[j] where i<j: " << ans << endl;
+    int ans = maximum_product_subarray(arr, n);
+    cout << "Maximum product of the subarray is: " << ans << endl;
+
+    // int ans = reverse_pairs(arr, n);
+    // cout << "No. of pairs that can be created for arr[i]>2* arr[j] where i<j: " << ans << endl;
 
     // int ans = count_inversion(arr, n);
     // cout << "No. of pairs that can be created for arr[i]>arr[j] where i<j: " << ans << endl;
