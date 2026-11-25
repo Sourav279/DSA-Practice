@@ -1758,8 +1758,6 @@ pair<int, int> find_missing_and_repeating_number(vector<int> &arr, int n)
     return {(int)missing, (int)repeating};
 }
 
-int countInversion = 0;
-
 int merge_sort_for_count_inversion(vector<int> &arr, int low, int high)
 {
     int countInversion = 0;
@@ -1830,6 +1828,92 @@ int count_inversion(vector<int> &arr, int n)
     // Space Complexity = O(n)
     int countInversion = merge_sort_for_count_inversion(arr, 0, n - 1);
     return countInversion;
+}
+
+int count_pairs_for_reverse_pairs(vector<int> &arr, int low, int mid, int high)
+{
+    int right = mid + 1;
+    int count = 0;
+    for (int i = low; i <= mid; i++)
+    {
+        while (right <= high && arr[i] > 2 * arr[right])
+        {
+            right++;
+        }
+        count += (right - (mid + 1));
+    }
+    return count;
+}
+
+int merge_sort_for_reverse_pair(vector<int> &arr, int low, int high)
+{
+    int countReversePair = 0;
+    if (low >= high)
+        return countReversePair;
+    int mid = (low + high) / 2;
+    countReversePair += merge_sort_for_reverse_pair(arr, low, mid);
+    countReversePair += merge_sort_for_reverse_pair(arr, mid + 1, high);
+    countReversePair += count_pairs_for_reverse_pairs(arr, low, mid, high);
+    vector<int> temp_array;
+    int left = low;
+    int right = mid + 1;
+    while (left <= mid && right <= high)
+    {
+        if (arr[left] <= arr[right])
+        {
+            temp_array.push_back(arr[left]);
+            left++;
+        }
+        else
+        {
+            temp_array.push_back(arr[right]);
+            right++;
+        }
+    }
+    while (left <= mid)
+    {
+        temp_array.push_back(arr[left]);
+        left++;
+    }
+    while (right <= high)
+    {
+        temp_array.push_back(arr[right]);
+        right++;
+    }
+    for (int i = low; i <= high; i++)
+    {
+        arr[i] = temp_array[i - low];
+    }
+    return countReversePair;
+}
+
+int reverse_pairs(vector<int> &arr, int n)
+{
+    // Count the pairs for which arr[i] > 2*arr[j] where i<j
+
+    // Brute force
+    // Time complexity =  O(n*n)
+    // Space Complexity = O(1)
+    // int count = 0;
+    // for (int i = 0; i < n - 1; i++)
+    // {
+    //     for (int j = i + 1; j < n; j++)
+    //     {
+    //         if (arr[i] > 2 * arr[j])
+    //             count++;
+    //     }
+    // }
+    // return count;
+
+    // Optimal solution using merge sort
+    // The idea is that we will count the elements which are 2 times smaller than the left element according to sorted array before re merging in merge sort
+    // So that we can add number equal to the elements present on right side on element in current array.
+    // We will check each element on left and checl until it breaks condition on right. Once it breaks then we will add count of elements till now and in next element we dont need to start from begining of right array instead we will start from where we left and add previously visited elements by default
+    // as all the elements on the right will be greater than the current element in sorted array
+    // Time complexity =  O(2n*logn)
+    // Space Complexity = O(n)
+    int countReversePair = merge_sort_for_reverse_pair(arr, 0, n - 1);
+    return countReversePair;
 }
 
 int binary_search_in_array(vector<int> arr, int n, int k)
@@ -2102,8 +2186,11 @@ int main()
         cin >> arr[i];
     }
 
-    int ans = count_inversion(arr, n);
-    cout << "No. of pairs that can be created for arr[i]>arr[j+1] where i<j: " << ans << endl;
+    int ans = reverse_pairs(arr, n);
+    cout << "No. of pairs that can be created for arr[i]>2* arr[j] where i<j: " << ans << endl;
+
+    // int ans = count_inversion(arr, n);
+    // cout << "No. of pairs that can be created for arr[i]>arr[j] where i<j: " << ans << endl;
 
     // pair<int, int> ans = find_missing_and_repeating_number(arr, n);
     // cout << "missing: " << ans.first << endl;
